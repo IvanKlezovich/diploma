@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-class-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: class
+            columns:
+              - column:
+                  name: class_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: class_name
+                  type: varchar(100)
+              - column:
+                  name: teacher
+                  type: uuid
+                  references: teacher(teacher_id)

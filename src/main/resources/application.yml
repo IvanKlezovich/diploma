@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: demo
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+#==============================================================================#
+#                                   Liquibase                                  #
+#==============================================================================#
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: classpath:db/changelog/db.changelog-root.xml
+    default-schema: public
+    contexts: ${spring.profiles.active}
+#==============================================================================
+#                               POSTGRES profile
+#==============================================================================
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/skill_matrix
+    username: user
+    password: pass
+  jpa:
+    hibernate.ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: false
+        generate_statistics: true
+        format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: INFO
+    # Liquibase
+    liquibase: INFO
+
+#server:
+#  servlet:
+#    context-path: /back-team-skills-tracker-service
+#
+#auth-container-name: back-auth-service
+#
+##==============================================================================
+##                                   Swagger
+##==============================================================================
+#springdoc:
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui
+#  api-docs:
+#    path: /api-docs
+#
+#  #==============================================================================
+#  #                                   Security
+#  #==============================================================================
+#  security.auth.feign-client=auth-service
+#  security.auth.feign-auth-service-url=http://skm-back-auth-service:8090/${auth-container-name}
+#  security.auth.public-key-uri=/api/v1/access/key
+#  security.auth.is-blacklisted-uri=/api/v1/access/blacklisted
+#  security.auth.current-user=/api/v1/users/current
+#  security.algorithm=RSA
+#  public-api=/swagger-ui*/**,/api-docs/**,/actuator/health

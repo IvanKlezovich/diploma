@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-comment-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: comment
+            columns:
+              - column:
+                  name: comment_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: student
+                  type: uuid
+                  references: student(student_id)

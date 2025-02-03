@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-mark-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: mark
+            columns:
+              - column:
+                  name: mark_id
+                  type: smallint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: mark
+                  type: smallint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(200)

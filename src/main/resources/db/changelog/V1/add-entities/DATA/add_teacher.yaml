@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-teacher-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: teacher
+            columns:
+              - column:
+                  name: teacher_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: firstname
+                  type: varchar(100)
+              - column:
+                  name: surname
+                  type: varchar(100)
+              - column:
+                  name: lastname
+                  type: varchar(100)
+              - column:
+                  name: full_name
+                  type: varchar(300)
+              - column:
+                  name: age
+                  type: smallint
+              - column:
+                  name: seniority
+                  type: smallint
+              - column:
+                  name: class
+                  type: uuid
+                  references: class(class_id)
+              - column:
+                  name: specialization_id
+                  type: uuid
+                  references: lesson(lesson_id)
+              - column:
+                  name: address
+                  type: uuid
+                  references: address(address_id)

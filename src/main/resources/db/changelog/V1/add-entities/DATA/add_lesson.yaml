@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-lessons-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: lessons
+            columns:
+              - column:
+                  name: lesson_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(200)
+              - column:
+                  name: mark
+                  type: smallint
+                  references: mark(mark_id)

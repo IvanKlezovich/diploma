@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-parent-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: parent
+            columns:
+              - column:
+                  name: parent_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: firstname
+                  type: varchar(100)
+              - column:
+                  name: surname
+                  type: varchar(100)
+              - column:
+                  name: lastname
+                  type: varchar(100)
+              - column:
+                  name: full_name
+                  type: varchar(300)
+              - column:
+                  name: job
+                  type: varchar(100)
+              - column:
+                  name: address
+                  type: uuid
+                  references: address(address_id)
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: student
+                  type: uuid
+                  references: student(student_id)
