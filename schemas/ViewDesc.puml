@@ -1,0 +1,11 @@
+@startuml
+actor "Пользователь" as User
+participant "Система" as System
+
+User -> System : Заходит на карточку ученика\nи запрашивает просмотр заметки
+System -> System : Поиск карточки ученика\nи информации в ней
+System --> User : Отображает заметку
+alt Система не находит заметку
+    System --> User : Отображает сообщение об ошибке
+end
+@enduml
