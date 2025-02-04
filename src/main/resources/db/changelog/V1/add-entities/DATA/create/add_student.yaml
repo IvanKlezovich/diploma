@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: student
             columns:
               - column:
-                  name: student_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true
@@ -31,7 +31,7 @@ databaseChangeLog:
                   name: phone
                   type: varchar(20)
               - column:
-                  name: homeworks
+                  name: homework
                   type: uuid
               - column:
                   name: parent

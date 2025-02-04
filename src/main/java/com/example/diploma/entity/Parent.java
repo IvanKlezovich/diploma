@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +30,7 @@ public class Parent implements Serializable {
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
-  @Column(name = "parent_id")
+  @Column(name = "id")
   private UUID id;
 
   @Embedded

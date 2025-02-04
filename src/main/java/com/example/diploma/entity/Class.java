@@ -27,7 +27,7 @@ public class Class implements Serializable {
   @Id
   @GeneratedValue(generator = "UUID")
   @UuidGenerator
-  @Column(name = "class_id")
+  @Column(name = "id")
   private UUID classId;
 
   @Column(name = "class_name")

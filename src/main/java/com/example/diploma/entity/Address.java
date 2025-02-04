@@ -24,7 +24,7 @@ public class Address implements Serializable {
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
-  @Column(name = "address_id")
+  @Column(name = "id")
   private UUID id;
 
   @Column(name = "apartment")

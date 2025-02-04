@@ -25,8 +25,8 @@ public class Homework implements Serializable {
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
-  @Column(name = "homework_id")
-  private UUID homeworkId;
+  @Column(name = "id")
+  private UUID id;
 
   @Column(name = "task")
   private String task;

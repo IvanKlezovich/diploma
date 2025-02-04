@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: homework
             columns:
               - column:
-                  name: homework_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true

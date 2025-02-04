@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: address
             columns:
               - column:
-                  name: address_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true

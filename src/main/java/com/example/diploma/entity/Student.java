@@ -30,7 +30,7 @@ public class Student implements Serializable {
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
-  @Column(name = "student_id")
+  @Column(name = "id")
   private UUID id;
 
   @Embedded

@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: parent
             columns:
               - column:
-                  name: parent_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true

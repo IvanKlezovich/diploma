@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: teacher
             columns:
               - column:
-                  name: teacher_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true

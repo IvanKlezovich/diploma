@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: comment
             columns:
               - column:
-                  name: comment_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true

@@ -20,7 +20,7 @@ public class Mark {
 
   @Id
   @GeneratedValue(generator = "Short")
-  @Column(name = "mark_id")
+  @Column(name = "id")
   private short id;
 
   @Column(name = "mark")

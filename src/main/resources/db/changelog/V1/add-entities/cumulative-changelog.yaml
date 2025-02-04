@@ -24,3 +24,7 @@ databaseChangeLog:
       file: db/changelog/V1/add-entities/DATA/create/add_student.yaml
   - include:
       file: db/changelog/V1/add-entities/DATA/create/add_teacher.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_support_table_for_homework.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/constrains/add_foreign_key.yaml

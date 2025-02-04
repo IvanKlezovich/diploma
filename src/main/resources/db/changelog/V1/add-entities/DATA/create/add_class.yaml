@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: class
             columns:
               - column:
-                  name: class_id
+                  name: id
                   type: uuid
                   constraints:
                     primaryKey: true

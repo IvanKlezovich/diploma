@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: mark
             columns:
               - column:
-                  name: mark_id
+                  name: id
                   type: smallint
                   autoIncrement: true
                   constraints:

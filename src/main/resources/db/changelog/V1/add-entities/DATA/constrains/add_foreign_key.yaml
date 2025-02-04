@@ -4,34 +4,74 @@ databaseChangeLog:
       author: Ivan Klezovich
       changes:
         - addForeignKeyConstraint:
-            referencedColumnNames: teacher_id
+            referencedColumnNames: id
             referencedTableName: teacher
             baseColumnNames: teacher
             baseTableName: class
-            onDelete: CASCADE
-            onUpdate: RESTRICT
             constraintName: fk_class_teacher
         - addForeignKeyConstraint:
-            referencedColumnNames: mark_id
+            referencedColumnNames: id
+            referencedTableName: class
+            baseColumnNames: class
+            baseTableName: student
+            constraintName: fk_student_class
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
             referencedTableName: mark
             baseColumnNames: mark
             baseTableName: lessons
-            onDelete: CASCADE
-            onUpdate: RESTRICT
             constraintName: fk_lessons_mark
         - addForeignKeyConstraint:
-            referencedColumnNames: mark_id
+            referencedColumnNames: id
             referencedTableName: mark
             baseColumnNames: mark
             baseTableName: homework
-            onDelete: CASCADE
-            onUpdate: RESTRICT
             constraintName: fk_homework_mark
         - addForeignKeyConstraint:
-            referencedColumnNames: mark_id
-            referencedTableName: mark
-            baseColumnNames: mark
-            baseTableName: lessons
-            onDelete: CASCADE
-            onUpdate: RESTRICT
-            constraintName: fk_lessons_mark
+            referencedColumnNames: id
+            referencedTableName: address
+            baseColumnNames: address
+            baseTableName: parent
+            constraintName: fk_parent_address
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
+            referencedTableName: address
+            baseTableName: student
+            baseColumnNames: address
+            constraintName: fk_student_address
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
+            referencedTableName: parent
+            baseColumnNames: parent
+            baseTableName: student
+            constraintName: fk_parent_student
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
+            referencedTableName: comment
+            baseColumnNames: comment
+            baseTableName: student
+            constraintName: fk_comment_student
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
+            referencedTableName: address
+            baseColumnNames: address
+            baseTableName: teacher
+            constraintName: fk_teacher_address
+        - addForeignKeyConstraint:
+              referencedColumnNames: id
+              referencedTableName: homework
+              baseColumnNames: homework
+              baseTableName: lessons
+              constraintName: fk_lessons_homework
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
+            referencedTableName: homework
+            baseColumnNames: homework
+            baseTableName: student_homework
+            constraintName: fk_student_homework_homework
+        - addForeignKeyConstraint:
+            referencedColumnNames: id
+            referencedTableName: student
+            baseColumnNames: student
+            baseTableName: student_homework
+            constraintName: fk_student_homework_student
