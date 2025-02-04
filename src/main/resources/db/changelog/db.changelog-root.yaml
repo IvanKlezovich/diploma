@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: main change log
+      author: Ivan Klezovich
+
+  - include:
+      file: /db/changelog/V1/add-entities/cumulative-changelog.yaml

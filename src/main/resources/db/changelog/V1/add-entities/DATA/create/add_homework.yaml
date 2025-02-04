@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-homework-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: homework
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: task
+                  type: text
+              - column:
+                  name: mark
+                  type: smallint
+              - column:
+                  name: done
+                  type: boolean
+                  defaultValue: false
+              - column:
+                  name: homework_url
+                  type: varchar(500)

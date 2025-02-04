@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-student-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: student
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: firstname
+                  type: varchar(100)
+              - column:
+                  name: surname
+                  type: varchar(100)
+              - column:
+                  name: lastname
+                  type: varchar(100)
+              - column:
+                  name: full_name
+                  type: varchar(300)
+              - column:
+                  name: address
+                  type: uuid
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: homework
+                  type: uuid
+              - column:
+                  name: parent
+                  type: uuid
+              - column:
+                  name: class
+                  type: uuid
+              - column:
+                  name: comment
+                  type: uuid

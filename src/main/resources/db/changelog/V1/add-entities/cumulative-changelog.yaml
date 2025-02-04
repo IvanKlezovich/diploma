@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: cumulative change log
+      author: Ivan Klezovich
+      changes:
+        - tagDatabase:
+            tag: add-entities
+
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_address.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_class.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_comment.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_homework.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_lesson.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_mark.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_parent.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_student.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_teacher.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/create/add_support_table_for_homework.yaml
+  - include:
+      file: db/changelog/V1/add-entities/DATA/constrains/add_foreign_key.yaml

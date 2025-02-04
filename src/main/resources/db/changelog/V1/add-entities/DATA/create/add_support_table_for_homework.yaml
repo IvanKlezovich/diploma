@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-support-table
+      author: Ivan Klezovich
+      changes:
+        - createTable:
+            tableName: student_homework
+            columns:
+              - column:
+                  name: student
+                  type: uuid
+              - column:
+                  name: homework
+                  type: uuid
