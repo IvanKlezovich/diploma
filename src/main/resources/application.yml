@@ -11,14 +11,14 @@ spring:
   liquibase:
     enabled: true
     drop-first: false
-    change-log: classpath:db/changelog/db.changelog-root.xml
+    change-log: classpath:db/changelog/db.changelog-root.yaml
     default-schema: public
     contexts: ${spring.profiles.active}
 #==============================================================================
 #                               POSTGRES profile
 #==============================================================================
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/skill_matrix
+    url: jdbc:postgresql://127.0.0.1:5432/school
     username: user
     password: pass
   jpa:

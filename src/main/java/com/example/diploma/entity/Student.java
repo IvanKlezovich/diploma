@@ -37,14 +37,13 @@ public class Student implements Serializable {
   @Column(name = "name")
   private Name name;
 
-  @OneToOne(mappedBy = "address_id")
-  @Column(name = "address")
+  @OneToOne
   private Address address;
 
   @Column(name = "student")
   private String phone;
 
-  @OneToMany(mappedBy = "homework_id")
+  @OneToMany
   @Column(name = "homeworks")
   private List<Homework> homeworks;
 
@@ -53,10 +52,9 @@ public class Student implements Serializable {
   private Set<Parent> parent;
 
   @ManyToOne
-  @Column(name = "class")
   private Class learningClass;
 
-  @OneToMany(mappedBy = "comment_id")
+  @OneToMany
   @Column(name = "comment")
   private List<Comment> comment;
 }

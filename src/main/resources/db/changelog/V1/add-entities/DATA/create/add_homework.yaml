@@ -18,7 +18,6 @@ databaseChangeLog:
               - column:
                   name: mark
                   type: smallint
-                  references: mark(mark_id)
               - column:
                   name: done
                   type: boolean

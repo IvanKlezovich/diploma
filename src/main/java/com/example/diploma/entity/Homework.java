@@ -31,8 +31,7 @@ public class Homework implements Serializable {
   @Column(name = "task")
   private String task;
 
-  @OneToOne(mappedBy = "mark_id")
-  @Column(name = "mark")
+  @OneToOne
   private Mark mark;
 
   @Column(name = "done")

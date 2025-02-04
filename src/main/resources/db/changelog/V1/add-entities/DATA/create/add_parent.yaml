@@ -30,11 +30,9 @@ databaseChangeLog:
               - column:
                   name: address
                   type: uuid
-                  references: address(address_id)
               - column:
                   name: description
                   type: text
               - column:
                   name: student
                   type: uuid
-                  references: student(student_id)

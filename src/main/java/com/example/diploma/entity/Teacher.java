@@ -43,15 +43,13 @@ public class Teacher implements Serializable {
   @Column(name = "seniority")
   private short seniority;
 
-  @OneToOne(mappedBy = "class_id")
-  @Column(name = "class")
+  @OneToOne
   private Class classTeacher;
 
-  @OneToMany(mappedBy = "lesson_id")
+  @OneToMany
   @Column(name = "specialization_id")
   private Set<Lesson> lessons;
 
-  @OneToOne(mappedBy = "address_id")
-  @Column(name = "address")
+  @OneToOne
   private Address address;
 }

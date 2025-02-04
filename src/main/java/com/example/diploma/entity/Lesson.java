@@ -33,10 +33,9 @@ public class Lesson implements Serializable {
   @Column(name = "title")
   private String title;
 
-  @OneToMany(mappedBy = "homework_id")
+  @OneToMany
   private List<Homework> homeworks;
 
-  @OneToOne(mappedBy = "mark_id")
-  @Column(name = "mark")
+  @OneToOne
   private Mark mark;
 }

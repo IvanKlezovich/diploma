@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -24,7 +26,7 @@ import org.hibernate.annotations.UuidGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parent")
-public class Parent {
+public class Parent implements Serializable {
 
   @Id
   @UuidGenerator
@@ -39,14 +41,13 @@ public class Parent {
   @Column(name = "job")
   private String job;
 
-  @OneToOne(mappedBy = "address_id")
-  @Column(name = "address")
+  @OneToOne
   private Address address;
 
   @Column(name = "description")
   private String description;
 
-  @OneToMany(mappedBy = "student_id")
+  @OneToMany
   @Column(name = "student")
   private List<Student> students;
 }

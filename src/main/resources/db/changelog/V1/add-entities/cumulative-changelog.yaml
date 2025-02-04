@@ -7,20 +7,20 @@ databaseChangeLog:
             tag: add-entities
 
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_address.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_address.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_class.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_class.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_comment.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_comment.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_homework.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_homework.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_lesson.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_lesson.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_mark.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_mark.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_parent.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_parent.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_student.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_student.yaml
   - include:
-      file: /db/changelog/V1/add-entities/DATA/add_teacher.yaml
+      file: db/changelog/V1/add-entities/DATA/create/add_teacher.yaml

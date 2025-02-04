@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-foreign-keys
+      author: Ivan Klezovich
+      changes:
+        - addForeignKeyConstraint:
+            referencedColumnNames: teacher_id
+            referencedTableName: teacher
+            baseColumnNames: teacher
+            baseTableName: class
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            constraintName: fk_class_teacher
+        - addForeignKeyConstraint:
+            referencedColumnNames: mark_id
+            referencedTableName: mark
+            baseColumnNames: mark
+            baseTableName: lessons
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            constraintName: fk_lessons_mark
+        - addForeignKeyConstraint:
+            referencedColumnNames: mark_id
+            referencedTableName: mark
+            baseColumnNames: mark
+            baseTableName: homework
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            constraintName: fk_homework_mark
+        - addForeignKeyConstraint:
+            referencedColumnNames: mark_id
+            referencedTableName: mark
+            baseColumnNames: mark
+            baseTableName: lessons
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            constraintName: fk_lessons_mark

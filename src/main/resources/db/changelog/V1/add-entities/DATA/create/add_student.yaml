@@ -1,13 +1,13 @@
 databaseChangeLog:
   - changeSet:
-      id: create-teacher-table
+      id: create-student-table
       author: Ivan Klezovich
       changes:
         - createTable:
-            tableName: teacher
+            tableName: student
             columns:
               - column:
-                  name: teacher_id
+                  name: student_id
                   type: uuid
                   constraints:
                     primaryKey: true
@@ -25,20 +25,20 @@ databaseChangeLog:
                   name: full_name
                   type: varchar(300)
               - column:
-                  name: age
-                  type: smallint
+                  name: address
+                  type: uuid
               - column:
-                  name: seniority
-                  type: smallint
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: homeworks
+                  type: uuid
+              - column:
+                  name: parent
+                  type: uuid
               - column:
                   name: class
                   type: uuid
-                  references: class(class_id)
               - column:
-                  name: specialization_id
+                  name: comment
                   type: uuid
-                  references: lesson(lesson_id)
-              - column:
-                  name: address
-                  type: uuid
-                  references: address(address_id)

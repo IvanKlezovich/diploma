@@ -18,4 +18,3 @@ databaseChangeLog:
               - column:
                   name: mark
                   type: smallint
-                  references: mark(mark_id)

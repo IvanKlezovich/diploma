@@ -1,21 +1,20 @@
 databaseChangeLog:
   - changeSet:
-      id: create-class-table
+      id: create-comment-table
       author: Ivan Klezovich
       changes:
         - createTable:
-            tableName: class
+            tableName: comment
             columns:
               - column:
-                  name: class_id
+                  name: comment_id
                   type: uuid
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: class_name
-                  type: varchar(100)
+                  name: description
+                  type: text
               - column:
-                  name: teacher
+                  name: student
                   type: uuid
-                  references: teacher(teacher_id)

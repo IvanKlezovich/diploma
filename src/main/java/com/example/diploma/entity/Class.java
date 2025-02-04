@@ -33,7 +33,6 @@ public class Class implements Serializable {
   @Column(name = "class_name")
   private String className;
 
-  @OneToOne(mappedBy = "teacher_id")
-  @Column(name = "teacher")
+  @OneToOne
   private Teacher classTeacher;
 }

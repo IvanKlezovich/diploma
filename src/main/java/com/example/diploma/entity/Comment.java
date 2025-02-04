@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import java.io.Serializable;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +21,7 @@ import org.hibernate.annotations.UuidGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "comment")
-public class Comment {
+public class Comment implements Serializable {
 
   @Id
   @UuidGenerator
@@ -31,6 +33,5 @@ public class Comment {
   private String description;
 
   @OneToOne
-  @Column(name = "student")
   private Student student;
 }
