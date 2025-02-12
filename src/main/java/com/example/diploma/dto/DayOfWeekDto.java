@@ -5,10 +5,12 @@ import com.example.diploma.entity.Day;
 import com.example.diploma.entity.Lesson;
 
 import java.util.List;
+import lombok.Builder;
 
+@Builder
 public record DayOfWeekDto(
         Day name,
-        Class className,
+        List<Class> className,
         List<Lesson> lessons) {
 
 }

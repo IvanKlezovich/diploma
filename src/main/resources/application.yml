@@ -41,7 +41,7 @@ logging:
   level:
     org.hibernate.SQL: INFO
     # Liquibase
-    liquibase: INFO
+#    liquibase: INFO
 
 #server:
 #  servlet:
