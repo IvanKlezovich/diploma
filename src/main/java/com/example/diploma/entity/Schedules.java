@@ -1,14 +1,15 @@
 package com.example.diploma.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,20 +18,25 @@ import org.hibernate.annotations.UuidGenerator;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comment")
-public class Comment implements Serializable {
+public class Schedules {
 
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
-  @Column(name = "id")
   private UUID id;
 
-  @Column(name = "description")
-  private String description;
+  @OneToOne
+  private Form form;
 
   @OneToOne
-  private Student student;
+  private Lesson lesson;
+
+  private LocalDateTime startTime;
+
+  @Enumerated(EnumType.STRING)
+  private Day days;
 }
+

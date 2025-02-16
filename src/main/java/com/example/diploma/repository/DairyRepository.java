@@ -1,18 +1,14 @@
 package com.example.diploma.repository;
 
-import com.example.diploma.entity.DayOfWeek;
+import com.example.diploma.entity.Schedules;
+import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DairyRepository extends JpaRepository<DayOfWeek, Long> {
+public interface DairyRepository extends JpaRepository<Schedules, UUID> {
 
-  @Query("""
-          select dw
-          from DayOfWeek dw
-          where dw.name = :dayOfWeek
-          """)
-  DayOfWeek getDayOfWeekByName(@Param("dayOfWeek") String dayOfWeek);
+  Schedules getSchedulesByDays(String day);
 }

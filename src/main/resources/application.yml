@@ -13,12 +13,12 @@ spring:
 #==============================================================================#
 #                                   Liquibase                                  #
 #==============================================================================#
-  liquibase:
-    enabled: true
-    drop-first: false
-    change-log: classpath:db/changelog/db.changelog-root.yaml
-    default-schema: public
-    contexts: ${spring.profiles.active}
+#  liquibase:
+#    enabled: true
+#    drop-first: false
+#    change-log: classpath:db/changelog/db.changelog-root.yaml
+#    default-schema: public
+#    contexts: ${spring.profiles.active}
 #==============================================================================
 #                               POSTGRES profile
 #==============================================================================
@@ -27,19 +27,17 @@ spring:
     username: user
     password: pass
   jpa:
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: update
     open-in-view: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: false
         generate_statistics: true
-        format_sql: true
-    show-sql: true
 
-logging:
-  level:
-    org.hibernate.SQL: INFO
+#logging:
+#  level:
+#    org.hibernate.SQL: INFO
     # Liquibase
 #    liquibase: INFO
 

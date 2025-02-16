@@ -1,11 +1,11 @@
 package com.example.diploma.repository;
 
-import com.example.diploma.entity.Comment;
+import com.example.diploma.entity.Messages;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, UUID> {
+public interface CommentRepository extends JpaRepository<Messages, UUID> {
 
 }

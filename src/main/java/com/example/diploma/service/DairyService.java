@@ -6,5 +6,4 @@ public interface DairyService {
 
   DayOfWeekDto getDayOfWeekByName(String dayOfWeek);
 
-  DayOfWeekDto saveDayOfWeek(DayOfWeekDto day);
 }

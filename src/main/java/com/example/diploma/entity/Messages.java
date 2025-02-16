@@ -4,12 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,21 +16,23 @@ import org.hibernate.annotations.UuidGenerator;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "class")
-public class Class implements Serializable {
+public class Messages implements Serializable {
 
   @Id
-  @GeneratedValue(generator = "UUID")
   @UuidGenerator
-  @Column(name = "id")
-  private UUID classId;
+  @GeneratedValue(generator = "UUID")
+  private UUID id;
 
-  @Column(name = "class_name")
-  private String className;
+  LocalDateTime addData;
 
-  @OneToOne
-  private Teacher classTeacher;
+  private String description;
+
+  private UUID fromUser;
+
+  private UUID toUser;
+
+  @Column(name = "read", columnDefinition = "bool default false")
+  private boolean read = false;
 }

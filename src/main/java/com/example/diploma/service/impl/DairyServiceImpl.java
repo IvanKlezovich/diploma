@@ -1,7 +1,7 @@
 package com.example.diploma.service.impl;
 
 import com.example.diploma.dto.DayOfWeekDto;
-import com.example.diploma.entity.DayOfWeek;
+import com.example.diploma.entity.Schedules;
 import com.example.diploma.repository.DairyRepository;
 import com.example.diploma.service.DairyService;
 import jakarta.transaction.Transactional;
@@ -18,21 +18,12 @@ public class DairyServiceImpl implements DairyService {
 
     @Transactional
     public DayOfWeekDto getDayOfWeekByName(String day) {
-        DayOfWeek dayOfWeek = dairyRepository.getDayOfWeekByName(day);
+        Schedules dayOfWeek = dairyRepository.getSchedulesByDays(day);
         return DayOfWeekDto.builder()
-            .name(dayOfWeek.getName())
-            .className(dayOfWeek.getClassName())
-            .lessons(dayOfWeek.getLessons())
-            .build();
-    }
-
-    @Transactional
-    public DayOfWeekDto saveDayOfWeek(DayOfWeekDto day) {
-        DayOfWeek dayOfWeek = dairyRepository.save(new DayOfWeek(day.name(), day.className(), day.lessons()));
-        return DayOfWeekDto.builder()
-            .name(dayOfWeek.getName())
-            .className(dayOfWeek.getClassName())
-            .lessons(dayOfWeek.getLessons())
+            .name(dayOfWeek.getDays())
+            .formName(dayOfWeek.getForm())
+            .lessons(dayOfWeek.getLesson())
+            .startTime(dayOfWeek.getStartTime())
             .build();
     }
 }

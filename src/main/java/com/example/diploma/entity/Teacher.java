@@ -1,7 +1,6 @@
 package com.example.diploma.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,32 +23,18 @@ import org.hibernate.annotations.UuidGenerator;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "teacher")
-public class Teacher implements Serializable {
+public class Teacher extends Users implements Serializable {
 
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
-  @Column(name = "id")
   private UUID id;
 
-  @Embedded
-  @Column(name = "name")
-  private Name name;
-
-  @Column(name = "age")
-  private short age;
-
-  @Column(name = "seniority")
   private short seniority;
 
   @OneToOne
-  private Class classTeacher;
+  private Form form;
 
   @OneToMany
-  @Column(name = "specialization_id")
   private Set<Lesson> lessons;
-
-  @OneToOne
-  private Address address;
 }

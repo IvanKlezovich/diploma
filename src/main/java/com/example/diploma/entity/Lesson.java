@@ -4,9 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,9 +32,6 @@ public class Lesson implements Serializable {
   @Column(name = "title")
   private String title;
 
-  @OneToOne
-  private Homework homework;
-
-  @OneToOne
-  private Mark mark;
+  @OneToMany
+  private List<Homework> homework;
 }

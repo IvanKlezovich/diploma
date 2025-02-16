@@ -1,37 +1,35 @@
 package com.example.diploma.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Mark {
+public class Form implements Serializable {
 
   @Id
-  @GeneratedValue(generator = "Short")
-  private Long id;
+  @GeneratedValue(generator = "UUID")
+  @UuidGenerator
+  private UUID classId;
 
-  private short mark;
-
-  @OneToOne
-  private Student student;
+  private String name;
 
   @OneToOne
-  private Lesson lesson;
-
-  private LocalDateTime mark_date;
-
-  private String markDescription;
-
-  private String reason;
+  private Teacher classTeacher;
 }
