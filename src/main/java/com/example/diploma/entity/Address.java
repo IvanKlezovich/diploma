@@ -28,7 +28,7 @@ public class Address implements Serializable {
   private UUID id;
 
   @Column(name = "apartment")
-  private Long  apartment;
+  private Long apartment;
 
   @Column(name = "house_number")
   private String houseNumber;

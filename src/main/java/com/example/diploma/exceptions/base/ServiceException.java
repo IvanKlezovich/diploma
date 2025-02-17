@@ -6,10 +6,10 @@ import java.util.Optional;
 
 public interface ServiceException {
 
-    Map<Locale, String> getMessages();
+  Map<Locale, String> getMessages();
 
-    Optional<Integer> getHttpCode();
+  Optional<Integer> getHttpCode();
 
-    Map<String, String> getParams();
+  Map<String, String> getParams();
 
 }

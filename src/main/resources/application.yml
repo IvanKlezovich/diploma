@@ -10,18 +10,18 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
-#==============================================================================#
-#                                   Liquibase                                  #
-#==============================================================================#
-#  liquibase:
-#    enabled: true
-#    drop-first: false
-#    change-log: classpath:db/changelog/db.changelog-root.yaml
-#    default-schema: public
-#    contexts: ${spring.profiles.active}
-#==============================================================================
-#                               POSTGRES profile
-#==============================================================================
+  #==============================================================================#
+  #                                   Liquibase                                  #
+  #==============================================================================#
+  #  liquibase:
+  #    enabled: true
+  #    drop-first: false
+  #    change-log: classpath:db/changelog/db.changelog-root.yaml
+  #    default-schema: public
+  #    contexts: ${spring.profiles.active}
+  #==============================================================================
+  #                               POSTGRES profile
+  #==============================================================================
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/school
     username: user
@@ -35,9 +35,9 @@ spring:
         show-sql: false
         generate_statistics: true
 
-#logging:
-#  level:
-#    org.hibernate.SQL: INFO
+    #logging:
+    #  level:
+    #    org.hibernate.SQL: INFO
     # Liquibase
 #    liquibase: INFO
 

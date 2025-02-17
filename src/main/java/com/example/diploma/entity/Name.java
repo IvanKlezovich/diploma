@@ -1,7 +1,6 @@
 package com.example.diploma.entity;
 
 import jakarta.persistence.Column;
-
 import java.io.Serializable;
 
 public class Name implements Serializable {

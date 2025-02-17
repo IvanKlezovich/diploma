@@ -5,9 +5,9 @@ import java.util.Map;
 
 public record ErrorResponse(
 
-        String errorCode,
-        String message,
-        Map<String, String> params,
-        ZonedDateTime nowUTC) {
+    String errorCode,
+    String message,
+    Map<String, String> params,
+    ZonedDateTime nowUTC) {
 
 }

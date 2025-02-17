@@ -7,19 +7,19 @@ import lombok.Data;
 @Builder
 public class AddressDto {
 
-    private Long  apartment;
+  private Long apartment;
 
-    private String houseNumber;
+  private String houseNumber;
 
-    private String street;
+  private String street;
 
-    private String city;
+  private String city;
 
-    private String state;
+  private String state;
 
-    private String zip;
+  private String zip;
 
-    private String country;
+  private String country;
 
-    private String phone;
+  private String phone;
 }

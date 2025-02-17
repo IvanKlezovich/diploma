@@ -12,19 +12,19 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 @Configuration
 public class SwaggerConfig {
 
-    private static final String TITLE = "DairyAPI";
-    private static final String DESCRIPTION = "Service to manage dairy";
+  private static final String TITLE = "DairyAPI";
+  private static final String DESCRIPTION = "Service to manage dairy";
 
-    @Bean
-    public OpenAPI customOpenAPI(@Value("${server.servlet.context-path}") String contextPath) {
-        return new OpenAPI()
-                .addServersItem(new Server().url(contextPath))
-                .info(new Info()
-                        .title(TITLE)
-                        .description(DESCRIPTION)
-                        .version("v1")
-                );
-    }
+  @Bean
+  public OpenAPI customOpenAPI(@Value("${server.servlet.context-path}") String contextPath) {
+    return new OpenAPI()
+        .addServersItem(new Server().url(contextPath))
+        .info(new Info()
+            .title(TITLE)
+            .description(DESCRIPTION)
+            .version("v1")
+        );
+  }
 
 //    @Bean
 //    public OpenApiCustomizer openApiCustomiser(MessageSource messageSource) {
@@ -65,11 +65,11 @@ public class SwaggerConfig {
 //        return result.toString();
 //    }
 
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
-    }
+  @Bean
+  public MessageSource messageSource() {
+    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    messageSource.setBasename("messages");
+    messageSource.setDefaultEncoding("UTF-8");
+    return messageSource;
+  }
 }

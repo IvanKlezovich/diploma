@@ -58,11 +58,11 @@ databaseChangeLog:
             baseTableName: teacher
             constraintName: fk_teacher_address
         - addForeignKeyConstraint:
-              referencedColumnNames: id
-              referencedTableName: homework
-              baseColumnNames: homework
-              baseTableName: lessons
-              constraintName: fk_lessons_homework
+            referencedColumnNames: id
+            referencedTableName: homework
+            baseColumnNames: homework
+            baseTableName: lessons
+            constraintName: fk_lessons_homework
         - addForeignKeyConstraint:
             referencedColumnNames: id
             referencedTableName: homework

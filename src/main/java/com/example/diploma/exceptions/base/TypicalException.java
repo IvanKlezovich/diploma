@@ -1,8 +1,9 @@
 package com.example.diploma.exceptions.base;
 
 public interface TypicalException {
-    String getType();
 
-    String getMessage();
+  String getType();
+
+  String getMessage();
 
 }

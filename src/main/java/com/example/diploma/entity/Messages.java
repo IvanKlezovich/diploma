@@ -20,13 +20,11 @@ import org.hibernate.annotations.UuidGenerator;
 @AllArgsConstructor
 public class Messages implements Serializable {
 
+  LocalDateTime addData;
   @Id
   @UuidGenerator
   @GeneratedValue(generator = "UUID")
   private UUID id;
-
-  LocalDateTime addData;
-
   private String description;
 
   private UUID fromUser;
