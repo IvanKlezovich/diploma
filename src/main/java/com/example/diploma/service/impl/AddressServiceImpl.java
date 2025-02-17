@@ -1,8 +1,12 @@
 package com.example.diploma.service.impl;
 
+import com.example.diploma.dto.AddressDto;
 import com.example.diploma.entity.Address;
+import com.example.diploma.mapper.AddressMapper;
 import com.example.diploma.repository.AddressRepository;
 import com.example.diploma.service.AddressService;
+
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,15 +16,19 @@ import org.springframework.stereotype.Service;
 public class AddressServiceImpl implements AddressService {
 
   private final AddressRepository addressRepository;
+  private final AddressMapper addressMapper;
 
   @Override
-  public Address getAddress(UUID id) {
-    return addressRepository.getById(id);
+  public AddressDto getAddress(UUID id) {
+    return addressMapper.toAddressDto(addressRepository.findById(id)
+            .orElse(null));
   }
 
   @Override
-  public Address saveAddress(Address address) {
-    return addressRepository.save(address);
+  public AddressDto saveAddress(AddressDto addressDto) {
+    return addressMapper.toAddressDto(
+            addressRepository.save(
+                    addressMapper.toEntity(addressDto)));
   }
 
   @Override
@@ -29,7 +37,13 @@ public class AddressServiceImpl implements AddressService {
   }
 
   @Override
-  public Address updateAddress(Address address) {
-    return addressRepository.save(address);
+  public AddressDto updateAddress(AddressDto addressDto) {
+    return addressMapper.toAddressDto(
+            addressRepository.save(
+                    addressMapper.toEntity(addressDto)));
+  }
+
+  public List<AddressDto> getAllAddresses() {
+    return addressMapper.toAddressDtoList(addressRepository.findAll());
   }
 }

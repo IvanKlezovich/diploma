@@ -1,7 +1,6 @@
 package com.example.diploma.entity;
 
 import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ public class Users {
   private String email;
   private String phone;
   @OneToOne
-  private Address address;
+  private Address addressDto;
 
 
   private String login;

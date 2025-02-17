@@ -1,15 +1,8 @@
 package com.example.diploma.config;
 
-import static com.example.diploma.config.ReadMessageConfig.getMessage;
-
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

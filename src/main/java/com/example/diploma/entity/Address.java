@@ -30,7 +30,7 @@ public class Address implements Serializable {
   @Column(name = "apartment")
   private Long  apartment;
 
-  @Column(name = "houseNumber")
+  @Column(name = "house_number")
   private String houseNumber;
 
   @Column(name = "street")
