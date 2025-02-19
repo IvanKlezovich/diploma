@@ -1,5 +1,5 @@
 package com.example.diploma.service;
 
-public interface ClassService {
+public interface FormService {
 
 }
