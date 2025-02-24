@@ -31,22 +31,22 @@ public class LessonController {
   }
 
   @GetMapping("/current/future/{day}")
-  public List<Lesson> getCurrentLessons(@PathVariable String day) {
-    return lessonService.getCurrentLesson(day);
+  public List<Lesson> getCurrentLessonFuture(@PathVariable String day) {
+    return lessonService.getCurrentLessonFuture(day);
   }
 
   @GetMapping("/current/past/{day}")
-  public List<Lesson> getCurrentLessons(@PathVariable String day) {
-    return lessonService.getCurrentLesson(day);
+  public List<Lesson> getCurrentLessonPast(@PathVariable String day) {
+    return lessonService.getCurrentLessonPast(day);
   }
 
   @PostMapping("/add")
   public Lesson addLesson(@RequestBody Lesson lesson) {
-    return lessonService.add(lesson);
+    return lessonService.addLesson(lesson);
   }
 
   @PatchMapping("/edit")
   public Lesson editLesson(@RequestBody Lesson lesson) {
-    return lessonService.edit(lesson);
+    return lessonService.editLesson(lesson);
   }
 }

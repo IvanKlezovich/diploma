@@ -26,6 +26,6 @@ public class CommentController {
 
   @PostMapping("write/message")
   public Messages writeMessage(@RequestBody Messages message) {
-    return commentService.save(message);
+    return commentService.addComment(message);
   }
 }
