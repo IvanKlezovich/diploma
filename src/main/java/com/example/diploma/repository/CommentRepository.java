@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Messages, UUID> {
 
-  List<Messages> findAllByUserId(UUID userId);
+  List<Messages> findAllByFromUser(UUID userId);
 }

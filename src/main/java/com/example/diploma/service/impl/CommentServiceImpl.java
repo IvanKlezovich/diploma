@@ -15,7 +15,7 @@ public class CommentServiceImpl implements CommentService {
   private final CommentRepository commentRepository;
 
   public List<Messages> getAllComments(UUID userId) {
-    return commentRepository.findAllByUserId(userId);
+    return commentRepository.findAllByFromUser(userId);
   }
 
   public Messages addComment(Messages comment) {
