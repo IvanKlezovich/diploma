@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<section id="homework">
+  <h2>Домашние задания</h2>
+  <div class="add-form">
+    <h3>Добавить домашнее задание</h3>
+    <form action="#" method="post">
+      <div class="form-group">
+        <label for="hw-name">Название:</label>
+        <input id="hw-name" name="hw-name" required type="text">
+      </div>
+      <div class="form-group">
+        <label for="hw-description">Описание:</label>
+        <textarea id="hw-description" name="hw-description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="hw-deadline">Срок сдачи:</label>
+        <input id="hw-deadline" name="hw-deadline" required type="datetime-local">
+      </div>
+      <button type="submit">Добавить задание</button>
+    </form>
+  </div>
+  <table>
+    <tr>
+      <th>Название</th>
+      <th>Описание</th>
+      <th>Срок сдачи</th>
+    </tr>
+    <tr>
+      <td>Решить задачи 23-25</td>
+      <td>Решить задачи из учебника</td>
+      <td>03.09.2024 23:59</td>
+    </tr>
+  </table>
+</section>
+</body>
+</html>

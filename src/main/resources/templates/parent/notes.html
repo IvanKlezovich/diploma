@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Панель родителя</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+  <p>Родитель: Иванов Иван Петрович</p>
+  <h1>Панель родителя</h1>
+  <div class="form-group">
+    <label for="child-select">Выберите ребенка:</label>
+    <select id="child-select" onchange="updateChildInfo(this.value)">
+      <option value="ivanov">Иванов Иван</option>
+      <option value="petrov">Петров Петр</option>
+    </select>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a th:href="@{/parent/grades}" onclick="showSection('grades')">Оценки</a></li>
+    <li><a th:href="@{/parent/materials}" onclick="showSection('materials')">Учебные материалы</a></li>
+    <li><a th:href="@{/parent/events}" onclick="showSection('events')">События</a></li>
+    <li><a th:href="@{/parent/notes}" onclick="showSection('notes')">Замечания</a></li>
+    <li><a th:href="@{/parent/homework}" onclick="showSection('homework')">Домашние задания</a></li>
+    <li><a th:href="@{/parent/feedback}" onclick="showSection('feedback')">Обратная связь</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section id="notes">
+    <h2>Замечания об ученике</h2>
+    <table>
+      <tr>
+        <th>Замечание</th>
+        <th>Дата</th>
+      </tr>
+      <tr>
+        <td>Активное участие в уроке по математике</td>
+        <td>01.09.2024</td>
+      </tr>
+      <tr>
+        <td>Хорошая работа над проектом</td>
+        <td>02.09.2024</td>
+      </tr>
+    </table>
+  </section>
+</main>
+</body>
+</html>

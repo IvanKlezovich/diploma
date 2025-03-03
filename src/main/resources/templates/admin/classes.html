@@ -13,96 +13,51 @@
 </header>
 <nav>
   <ul>
-    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a>
-    </li>
-    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a>
-    </li>
+    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a></li>
+    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a></li>
     <li><a onclick="showSection('roles')" th:href="@{/admin/roles}">Распределение ролей</a></li>
-    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a>
-    </li>
+    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a></li>
   </ul>
 </nav>
 <main>
-  <section class="section active" id="users">
-    <h2>Управление пользователями</h2>
+  <section id="classes">
+    <h2>Формирование классов</h2>
     <div class="add-form">
-      <h3>Добавить пользователя</h3>
+      <h3>Создать класс</h3>
       <form action="#" method="post">
         <div class="form-group">
-          <label for="username">Имя пользователя:</label>
-          <input id="username" name="username" required type="text">
+          <label for="class-name">Название класса:</label>
+          <input type="text" id="class-name" name="class-name" required>
         </div>
         <div class="form-group">
-          <label for="email">Email:</label>
-          <input id="email" name="email" required type="email">
+          <label for="class-year">Год обучения:</label>
+          <input type="number" id="class-year" name="class-year" min="1" max="11" required>
         </div>
         <div class="form-group">
-          <label for="role">Роль:</label>
-          <select id="role" name="role">
-            <option value="admin">Администратор</option>
-            <option value="teacher">Учитель</option>
-            <option value="student">Ученик</option>
+          <label for="class-teacher">Классный руководитель:</label>
+          <select id="class-teacher" name="teacher">
+            <option value="">Выберите учителя</option>
+            <option value="teacher1">Петрова Елена</option>
+            <option value="teacher2">Сидоров Сергей</option>
           </select>
         </div>
-        <button type="submit">Добавить пользователя</button>
+        <button type="submit">Создать класс</button>
       </form>
     </div>
     <table>
       <tr>
-        <th>Имя пользователя</th>
-        <th>Email</th>
-        <th>Роль</th>
-        <th>Статус</th>
+        <th>Класс</th>
+        <th>Год обучения</th>
+        <th>Классный руководитель</th>
         <th>Действия</th>
       </tr>
       <tr>
-        <td>admin</td>
-        <td>admin@example.com</td>
-        <td>Администратор</td>
-        <td>Активен</td>
+        <td>7А</td>
+        <td>7</td>
+        <td>Петрова Елена</td>
         <td>
-          <button class="btn-block" type="button">Заблокировать</button>
-        </td>
-      </tr>
-    </table>
-  </section>
-  <section class="section hidden" id="content">
-    <h2>Редактирование контента</h2>
-    <div class="add-form">
-      <h3>Добавить запись</h3>
-      <form action="#" method="post">
-        <div class="form-group">
-          <label for="table-name">Таблица:</label>
-          <select id="table-name" name="table-name">
-            <option value="subjects">Предметы</option>
-            <option value="roles">Роли</option>
-            <option value="classes">Классы</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="field-name">Поле:</label>
-          <input id="field-name" name="field-name" required type="text">
-        </div>
-        <div class="form-group">
-          <label for="value">Значение:</label>
-          <input id="value" name="value" required type="text">
-        </div>
-        <button type="submit">Добавить</button>
-      </form>
-    </div>
-    <table>
-      <tr>
-        <th>Таблица</th>
-        <th>Поле</th>
-        <th>Значение</th>
-        <th>Действия</th>
-      </tr>
-      <tr>
-        <td>Предметы</td>
-        <td>Математика</td>
-        <td>Математика</td>
-        <td>
-          <button class="btn-edit" type="button">Редактировать</button>
+          <button type="button" class="btn-edit">Редактировать</button>
+          <button type="button" class="btn-delete">Удалить</button>
         </td>
       </tr>
     </table>
@@ -111,15 +66,5 @@
 <footer>
   <p>&copy; 2025 Панель администратора | Разработано для администрирования</p>
 </footer>
-<script>
-  function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => {
-      section.classList.remove('active');
-      section.classList.add('hidden');
-    });
-    document.getElementById(sectionId).classList.add('active');
-    document.getElementById(sectionId).classList.remove('hidden');
-  }
-</script>
 </body>
 </html>

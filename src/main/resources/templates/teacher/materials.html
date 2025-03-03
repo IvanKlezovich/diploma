@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<section id="materials">
+  <h2>Учебные материалы</h2>
+  <div class="add-form">
+    <h3>Добавить материал</h3>
+    <form action="#" enctype="multipart/form-data" method="post">
+      <div class="form-group">
+        <label for="material-name">Название:</label>
+        <input id="material-name" name="material-name" required type="text">
+      </div>
+      <div class="form-group">
+        <label for="material-file">Файл:</label>
+        <input id="material-file" name="material-file" type="file">
+      </div>
+      <div class="form-group">
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description"></textarea>
+      </div>
+      <button type="submit">Добавить материал</button>
+    </form>
+  </div>
+  <table>
+    <tr>
+      <th>Название</th>
+      <th>Описание</th>
+      <th>Дата добавления</th>
+    </tr>
+    <tr>
+      <td>Урок 1</td>
+      <td>Материалы к первому уроку</td>
+      <td>01.09.2024</td>
+    </tr>
+  </table>
+</section>
+</body>
+</html>

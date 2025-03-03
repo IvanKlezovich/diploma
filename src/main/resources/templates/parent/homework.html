@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Панель родителя</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+  <p>Родитель: Иванов Иван Петрович</p>
+  <h1>Панель родителя</h1>
+  <div class="form-group">
+    <label for="child-select">Выберите ребенка:</label>
+    <select id="child-select" onchange="updateChildInfo(this.value)">
+      <option value="ivanov">Иванов Иван</option>
+      <option value="petrov">Петров Петр</option>
+    </select>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a th:href="@{/parent/grades}" onclick="showSection('grades')">Оценки</a></li>
+    <li><a th:href="@{/parent/materials}" onclick="showSection('materials')">Учебные материалы</a></li>
+    <li><a th:href="@{/parent/events}" onclick="showSection('events')">События</a></li>
+    <li><a th:href="@{/parent/notes}" onclick="showSection('notes')">Замечания</a></li>
+    <li><a th:href="@{/parent/homework}" onclick="showSection('homework')">Домашние задания</a></li>
+    <li><a th:href="@{/parent/feedback}" onclick="showSection('feedback')">Обратная связь</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section id="homework">
+    <h2>Домашние задания</h2>
+    <table>
+      <tr>
+        <th>Предмет</th>
+        <th>Задание</th>
+        <th>Срок сдачи</th>
+      </tr>
+      <tr>
+        <td>Математика</td>
+        <td>Решить задачи 23-25, с. 123</td>
+        <td>03.09.2024 23:59</td>
+      </tr>
+      <tr>
+        <td>Русский язык</td>
+        <td>Написать сочинение по теме</td>
+        <td>04.09.2024 23:59</td>
+      </tr>
+    </table>
+  </section>
+</main>
+</body>
+</html>

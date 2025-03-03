@@ -13,60 +13,14 @@
 </header>
 <nav>
   <ul>
-    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a>
-    </li>
-    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a>
-    </li>
+    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a></li>
+    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a></li>
     <li><a onclick="showSection('roles')" th:href="@{/admin/roles}">Распределение ролей</a></li>
-    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a>
-    </li>
+    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a></li>
   </ul>
 </nav>
 <main>
-  <section class="section active" id="users">
-    <h2>Управление пользователями</h2>
-    <div class="add-form">
-      <h3>Добавить пользователя</h3>
-      <form action="#" method="post">
-        <div class="form-group">
-          <label for="username">Имя пользователя:</label>
-          <input id="username" name="username" required type="text">
-        </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input id="email" name="email" required type="email">
-        </div>
-        <div class="form-group">
-          <label for="role">Роль:</label>
-          <select id="role" name="role">
-            <option value="admin">Администратор</option>
-            <option value="teacher">Учитель</option>
-            <option value="student">Ученик</option>
-          </select>
-        </div>
-        <button type="submit">Добавить пользователя</button>
-      </form>
-    </div>
-    <table>
-      <tr>
-        <th>Имя пользователя</th>
-        <th>Email</th>
-        <th>Роль</th>
-        <th>Статус</th>
-        <th>Действия</th>
-      </tr>
-      <tr>
-        <td>admin</td>
-        <td>admin@example.com</td>
-        <td>Администратор</td>
-        <td>Активен</td>
-        <td>
-          <button class="btn-block" type="button">Заблокировать</button>
-        </td>
-      </tr>
-    </table>
-  </section>
-  <section class="section hidden" id="content">
+  <section id="content">
     <h2>Редактирование контента</h2>
     <div class="add-form">
       <h3>Добавить запись</h3>

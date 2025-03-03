@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Панель родителя</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+  <p>Родитель: Иванов Иван Петрович</p>
+  <h1>Панель родителя</h1>
+  <div class="form-group">
+    <label for="child-select">Выберите ребенка:</label>
+    <select id="child-select" onchange="updateChildInfo(this.value)">
+      <option value="ivanov">Иванов Иван</option>
+      <option value="petrov">Петров Петр</option>
+    </select>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a th:href="@{/parent/grades}" onclick="showSection('grades')">Оценки</a></li>
+    <li><a th:href="@{/parent/materials}" onclick="showSection('materials')">Учебные материалы</a></li>
+    <li><a th:href="@{/parent/events}" onclick="showSection('events')">События</a></li>
+    <li><a th:href="@{/parent/notes}" onclick="showSection('notes')">Замечания</a></li>
+    <li><a th:href="@{/parent/homework}" onclick="showSection('homework')">Домашние задания</a></li>
+    <li><a th:href="@{/parent/feedback}" onclick="showSection('feedback')">Обратная связь</a></li>
+  </ul>
+</nav>
+
+<section id="events">
+  <h2>События</h2>
+  <table>
+    <tr>
+      <th>Название</th>
+      <th>Дата</th>
+      <th>Тип</th>
+    </tr>
+    <tr>
+      <td>Контрольная работа по математике</td>
+      <td>15.09.2024 10:00</td>
+      <td>Контрольная работа</td>
+    </tr>
+    <tr>
+      <td>Коллоквиум по русскому языку</td>
+      <td>16.09.2024 11:00</td>
+      <td>Коллоквиум</td>
+    </tr>
+  </table>
+</section>
+</body>
+</html>
