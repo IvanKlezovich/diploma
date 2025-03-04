@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель учителя</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header>
@@ -13,17 +14,19 @@
 
 <nav>
   <ul>
-    <li><a th:href="@{/teacher/}" onclick="showSection('homepage')">Домашняя страница</a></li>
-    <li><a th:href="@{/teacher/grades}" onclick="showSection('grades')">Оценки</a></li>
-    <li><a th:href="@{/teacher/materials}" onclick="showSection('materials')">Учебные материалы</a></li>
-    <li><a th:href="@{/teacher/events}" onclick="showSection('events')">События</a></li>
-    <li><a th:href="@{/teacher/notes}" onclick="showSection('notes')">Замечания</a></li>
-    <li><a th:href="@{/teacher/homework}" onclick="showSection('homework')">Домашние задания</a></li>
+    <li><a onclick="showSection('homepage')" th:href="@{/teacher/}">Домашняя страница</a></li>
+    <li><a onclick="showSection('grades')" th:href="@{/teacher/grades}">Оценки</a></li>
+    <li><a onclick="showSection('materials')" th:href="@{/teacher/materials}">Учебные материалы</a>
+    </li>
+    <li><a onclick="showSection('events')" th:href="@{/teacher/events}">События</a></li>
+    <li><a onclick="showSection('notes')" th:href="@{/teacher/notes}">Замечания</a></li>
+    <li><a onclick="showSection('homework')" th:href="@{/teacher/homework}">Домашние задания</a>
+    </li>
   </ul>
 </nav>
 
 <main>
-   <section id="events">
+  <section id="events">
     <h2>События</h2>
     <div class="add-form">
       <h3>Добавить событие</h3>

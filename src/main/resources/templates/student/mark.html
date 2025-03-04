@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Панель учащегося</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+  <h1>Школьный дневник</h1>
+  <p>Класс: 7А | Ученик: Иванов Иван</p>
+</header>
+
+<nav>
+  <ul>
+    <li><a th:href="@{/student/schedules}">Расписание</a></li>
+    <li><a th:href="@{/student/mark}">Оценки</a></li>
+    <li><a th:href="@{/student/homework}">Домашнее задание</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section id="otsenki">
+    <h2>Оценки</h2>
+    <table class="grades-table">
+      <tr>
+        <th>Предмет</th>
+        <th>Оценка</th>
+        <th>Дата</th>
+      </tr>
+      <tr>
+        <td>Математика</td>
+        <td>5</td>
+        <td>01.09.2024</td>
+      </tr>
+      <!-- Добавьте другие оценки -->
+    </table>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Школьный дневник | Разработано для учеников</p>
+</footer>
+</body>
+</html>

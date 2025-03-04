@@ -1,43 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Панель учителя</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<header>
+  <h1>Панель учителя</h1>
+  <p>Учитель: Петрова Елена Ивановна | Предмет: Математика</p>
+</header>
 
-<section id="notes">
-  <h2>Замечания об учениках</h2>
-  <div class="add-form">
-    <h3>Добавить замечание</h3>
-    <form action="#" method="post">
-      <div class="form-group">
-        <label for="student-note">Ученик:</label>
-        <select id="student-note" name="student">
-          <option value="">Выберите ученика</option>
-          <option value="ivanov">Иванов Иван</option>
-          <option value="petrov">Петров Петр</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="note-text">Замечание:</label>
-        <textarea id="note-text" name="note-text" required></textarea>
-      </div>
-      <button type="submit">Добавить замечание</button>
-    </form>
-  </div>
-  <table>
-    <tr>
-      <th>Ученик</th>
-      <th>Замечание</th>
-      <th>Дата</th>
-    </tr>
-    <tr>
-      <td>Иванов Иван</td>
-      <td>Активное участие в уроке</td>
-      <td>01.09.2024</td>
-    </tr>
-  </table>
-</section>
+<nav>
+  <ul>
+    <li><a onclick="showSection('homepage')" th:href="@{/teacher/}">Домашняя страница</a></li>
+    <li><a onclick="showSection('grades')" th:href="@{/teacher/grades}">Оценки</a></li>
+    <li><a onclick="showSection('materials')" th:href="@{/teacher/materials}">Учебные материалы</a>
+    </li>
+    <li><a onclick="showSection('events')" th:href="@{/teacher/events}">События</a></li>
+    <li><a onclick="showSection('notes')" th:href="@{/teacher/notes}">Замечания</a></li>
+    <li><a onclick="showSection('homework')" th:href="@{/teacher/homework}">Домашние задания</a>
+    </li>
+  </ul>
+</nav>
+
+<main>
+  <section id="notes">
+    <h2>Замечания об учениках</h2>
+    <div class="add-form">
+      <h3>Добавить замечание</h3>
+      <form action="#" method="post">
+        <div class="form-group">
+          <label for="student-note">Ученик:</label>
+          <select id="student-note" name="student">
+            <option value="">Выберите ученика</option>
+            <option value="ivanov">Иванов Иван</option>
+            <option value="petrov">Петров Петр</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="note-text">Замечание:</label>
+          <textarea id="note-text" name="note-text" required></textarea>
+        </div>
+        <button type="submit">Добавить замечание</button>
+      </form>
+    </div>
+    <table>
+      <tr>
+        <th>Ученик</th>
+        <th>Замечание</th>
+        <th>Дата</th>
+      </tr>
+      <tr>
+        <td>Иванов Иван</td>
+        <td>Активное участие в уроке</td>
+        <td>01.09.2024</td>
+      </tr>
+    </table>
+  </section>
+</main>
+<footer>
+  <p>&copy; 2025 Панель учителя | Разработано для учителей</p>
+</footer>
 </body>
 </html>

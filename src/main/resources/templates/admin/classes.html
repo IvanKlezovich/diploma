@@ -13,10 +13,13 @@
 </header>
 <nav>
   <ul>
-    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a></li>
-    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a></li>
+    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a>
+    </li>
+    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a>
+    </li>
     <li><a onclick="showSection('roles')" th:href="@{/admin/roles}">Распределение ролей</a></li>
-    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a></li>
+    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a>
+    </li>
   </ul>
 </nav>
 <main>
@@ -27,11 +30,11 @@
       <form action="#" method="post">
         <div class="form-group">
           <label for="class-name">Название класса:</label>
-          <input type="text" id="class-name" name="class-name" required>
+          <input id="class-name" name="class-name" required type="text">
         </div>
         <div class="form-group">
           <label for="class-year">Год обучения:</label>
-          <input type="number" id="class-year" name="class-year" min="1" max="11" required>
+          <input id="class-year" max="11" min="1" name="class-year" required type="number">
         </div>
         <div class="form-group">
           <label for="class-teacher">Классный руководитель:</label>
@@ -56,8 +59,8 @@
         <td>7</td>
         <td>Петрова Елена</td>
         <td>
-          <button type="button" class="btn-edit">Редактировать</button>
-          <button type="button" class="btn-delete">Удалить</button>
+          <button class="btn-edit" type="button">Редактировать</button>
+          <button class="btn-delete" type="button">Удалить</button>
         </td>
       </tr>
     </table>
