@@ -4,70 +4,161 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель администратора</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!-- Bootstrap CSS -->
+  <link crossorigin="anonymous"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        rel="stylesheet">
+  <!-- Дополнительные стили -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    nav {
+      background-color: #2196F3;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+      border-radius: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .btn-block {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    header {
+      background-color: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>Панель администратора</h1>
-  <p>Администратор: Иванов Иван Петрович</p>
-</header>
-<nav>
-  <ul>
-    <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a>
-    </li>
-    <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование контента</a>
-    </li>
-    <li><a onclick="showSection('roles')" th:href="@{/admin/roles}">Распределение ролей</a></li>
-    <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a>
-    </li>
-  </ul>
-</nav>
 <main>
-  <section id="content">
-    <h2>Редактирование контента</h2>
-    <div class="add-form">
-      <h3>Добавить запись</h3>
-      <form action="#" method="post">
-        <div class="form-group">
-          <label for="table-name">Таблица:</label>
-          <select id="table-name" name="table-name">
-            <option value="subjects">Предметы</option>
-            <option value="roles">Роли</option>
-            <option value="classes">Классы</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="field-name">Поле:</label>
-          <input id="field-name" name="field-name" required type="text">
-        </div>
-        <div class="form-group">
-          <label for="value">Значение:</label>
-          <input id="value" name="value" required type="text">
-        </div>
-        <button type="submit">Добавить</button>
-      </form>
-    </div>
-    <table>
-      <tr>
-        <th>Таблица</th>
-        <th>Поле</th>
-        <th>Значение</th>
-        <th>Действия</th>
-      </tr>
-      <tr>
-        <td>Предметы</td>
-        <td>Математика</td>
-        <td>Математика</td>
-        <td>
-          <button class="btn-edit" type="button">Редактировать</button>
-        </td>
-      </tr>
-    </table>
-  </section>
+  <header>
+    <h1>Панель администратора</h1>
+    <p>Администратор: Иванов Иван Петрович</p>
+  </header>
+  <nav>
+    <ul>
+      <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a>
+      </li>
+      <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование
+        контента</a>
+      </li>
+      <li><a onclick="showSection('roles')" th:href="@{/admin/roles}">Распределение ролей</a></li>
+      <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a>
+      </li>
+    </ul>
+  </nav>
+  <main>
+    <section id="content">
+      <h2>Редактирование контента</h2>
+      <div class="add-form">
+        <h3>Добавить запись</h3>
+        <form action="#" method="post">
+          <div class="form-group">
+            <label for="table-name">Таблица:</label>
+            <select id="table-name" name="table-name">
+              <option value="subjects">Предметы</option>
+              <option value="roles">Роли</option>
+              <option value="classes">Классы</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="field-name">Поле:</label>
+            <input id="field-name" name="field-name" required type="text">
+          </div>
+          <div class="form-group">
+            <label for="value">Значение:</label>
+            <input id="value" name="value" required type="text">
+          </div>
+          <button type="submit">Добавить</button>
+        </form>
+      </div>
+      <table>
+        <tr>
+          <th>Таблица</th>
+          <th>Поле</th>
+          <th>Значение</th>
+          <th>Действия</th>
+        </tr>
+        <tr>
+          <td>Предметы</td>
+          <td>Математика</td>
+          <td>Математика</td>
+          <td>
+            <button class="btn-edit" type="button">Редактировать</button>
+          </td>
+        </tr>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Панель администратора | Разработано для администрирования</p>
+  </footer>
 </main>
-<footer>
-  <p>&copy; 2025 Панель администратора | Разработано для администрирования</p>
-</footer>
 <script>
   function showSection(sectionId) {
     document.querySelectorAll('.section').forEach(section => {

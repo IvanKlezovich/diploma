@@ -34,6 +34,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
   private String getTargetUrl(String authority) {
     return switch (authority) {
       case "ROLE_ADMIN" -> "/dairy-project/admin/";
+      case "ROLE_PARENT" -> "/dairy-project/parent/";
       case "ROLE_TEACHER" -> "/dairy-project/teacher/";
       case "ROLE_STUDENT" -> "/dairy-project/student/";
       default -> "/";
