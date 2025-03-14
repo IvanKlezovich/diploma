@@ -1,6 +1,7 @@
 package com.example.diploma.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.LocalDate;
 
 public record CreateUserDto(String login,
                             String email,
@@ -12,6 +13,7 @@ public record CreateUserDto(String login,
                             @JsonInclude(JsonInclude.Include.NON_NULL)
                             String job,
                             @JsonInclude(JsonInclude.Include.NON_NULL)
-                            String description) {
+                            String description,
+                            LocalDate timeLimit) {
 
 }

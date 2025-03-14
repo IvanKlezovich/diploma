@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Панель администратора</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .class-selector {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+
+    .class-selector select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    .class-schedule {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .class-schedule:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .class-schedule h2 {
+      color: #2196F3;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .schedule-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .week-half {
+      flex: 1;
+      padding: 10px;
+      background: linear-gradient(#fff 0%, #f5f5f5 100%);
+      border: 0px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .day-of-week {
+      flex: 1;
+      padding: 20px;
+      background: linear-gradient(#fff 0%, #f5f5f5 100%);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .lesson-date {
+      color: #2196F3;
+      font-size: 32px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .week-half h3 {
+      color: #2196F3;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .diary-entry {
+      background: linear-gradient(#fff 0%, #f5f5f5 100%);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .diary-entry::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #2196F3;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .diary-entry:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .diary-entry .lesson-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .diary-entry .lesson-info h3 {
+      margin: 0;
+      color: #333;
+    }
+
+    .diary-entry .lesson-info {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .diary-entry .lesson-details {
+      margin-top: 15px;
+    }
+
+    .diary-entry .lesson-details p {
+      margin-bottom: 10px;
+      color: #666;
+    }
+
+    .diary-entry .lesson-details .lesson-time {
+      color: #2196F3;
+    }
+
+    .diary-entry .lesson-details .lesson-subject {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .diary-entry .actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-block {
+      width: 120px;
+      color: #fff;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      background-color: grey;
+      border-color: grey;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .btn-edit {
+      width: 100px;
+      color: #fff;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      background-color: green;
+      border-color: green;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .btn-delete {
+      width: 100px;
+      color: #fff;
+      background-color: red;
+      border-color: red;
+      padding: 8px 16px;
+      border-radius: 4px;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav {
+      background-color: #2196F3;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    header {
+      background-color: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .modal-content {
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      border-bottom: 2px solid #eee;
+    }
+
+    .modal-footer {
+      border-top: 2px solid #eee;
+    }
+
+    .form-label {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .form-control {
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+    }
+
+    .btn-close {
+      background-color: #2196F3;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-close:hover {
+      background-color: #1976D2;
+    }
+  </style>
+</head>
+<body>
+<div aria-hidden="true" class="modal fade" data-diary-entry="" id="editLessonModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label" for="lessonInput">Предмет</label>
+          <input class="form-control" id="lessonInput" required type="text">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="timeInput">Время</label>
+          <input class="form-control" id="timeInput" required type="text">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="roomInput">Кабинет</label>
+          <input class="form-control" id="roomInput" required type="text">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Отмена</button>
+        <button class="btn btn-primary save-changes" type="button">Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+</div>
+<main>
+  <header>
+    <h1>Панель администратора</h1>
+    <p>Администратор: Иванов Иван Петрович</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a th:href="@{/admin/}">Домашняя страница</a></li>
+      <li><a th:href="@{/admin/users}">Управление пользователями</a></li>
+      <li><a th:href="@{/admin/content}">Редактирование предметов</a></li>
+      <li><a th:href="@{/admin/classes}">Формирование классов</a></li>
+      <li><a th:href="@{/admin/sheduler}">Формирование расписания</a></li>
+    </ul>
+  </nav>
+
+  <h2>Расписание уроков</h2>
+
+  <div class="class-selector">
+    <select id="classSelect">
+      <option value="all">Все классы</option>
+      <option value="9А">9А</option>
+      <option value="9Б">9Б</option>
+      <option value="10А">10А</option>
+      <option value="10Б">10Б</option>
+    </select>
+  </div>
+
+  <div class="class-schedule">
+    <h2>9А</h2>
+    <div class="schedule-container">
+      <div class="week-half">
+        <div class="day-of-week">
+          <div class="lesson-date">Понедельник</div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Русский язык</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">9:00 - 10:30</p>
+              <p>Кабинет: 301</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Литература</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">10:40 - 12:10</p>
+              <p>Кабинет: 302</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Математика</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">13:30 - 15:00</p>
+              <p>Кабинет: 303</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+        </div>
+        <div class="day-of-week">
+          <div class="lesson-date">Вторник</div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Физика</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">9:00 - 10:30</p>
+              <p>Кабинет: 307</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Химия</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">10:40 - 12:10</p>
+              <p>Кабинет: 308</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Биология</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">13:30 - 15:00</p>
+              <p>Кабинет: 309</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+        </div>
+        <div class="day-of-week">
+          <div class="lesson-date">Среда</div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Информатика</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">9:00 - 10:30</p>
+              <p>Кабинет: 313</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>География</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">10:40 - 12:10</p>
+              <p>Кабинет: 310</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>История</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">13:30 - 15:00</p>
+              <p>Кабинет: 311</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="week-half">
+        <div class="day-of-week">
+          <div class="lesson-date">Четверг</div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Обществознание</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">9:00 - 10:30</p>
+              <p>Кабинет: 312</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Физкультура</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">10:40 - 12:10</p>
+              <p>Спортзал</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Математика</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">13:30 - 15:00</p>
+              <p>Кабинет: 303</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+        </div>
+        <div class="day-of-week">
+          <div class="lesson-date">Пятница</div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Английский язык</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">9:00 - 10:30</p>
+              <p>Кабинет: 314</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Химия</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">10:40 - 12:10</p>
+              <p>Кабинет: 308</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+          <div class="diary-entry">
+            <div class="lesson-info"><h4>Физика</h4></div>
+            <div class="lesson-details">
+              <p class="lesson-time">13:30 - 15:00</p>
+              <p>Кабинет: 307</p>
+            </div>
+            <div class="actions">
+              <button class="btn-block btn-secondary">Редактировать</button>
+              <button class="btn-edit">Изменить</button>
+              <button class="btn-delete">Удалить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Панель администратора | Разработано для администрирования</p>
+  </footer>
+</main>
+</body>
+<script>
+
+  // Функция для получения списка классов с сервера
+  async function fetchClasses() {
+    try {
+      const response = await fetch('/api/classes');
+
+      if (!response.ok) {
+        throw new Error(`Ошибка при получении списка классов: ${response.status}`);
+      }
+
+      const classes = await response.json();
+      return classes;
+    } catch (error) {
+      console.error('Ошибка при получении списка классов:', error);
+      showAlert('Ошибка при загрузке списка классов. Попробуйте позже.');
+      return ['9А', '9Б', '10А', '10Б']; // Значения по умолчанию
+    }
+  }
+
+  // Модифицированная функция инициализации селектора
+  async function initClassSelector() {
+    const classSelect = document.getElementById('classSelect');
+
+    // Получаем список классов с сервера
+    const classes = await fetchClasses();
+
+    // Очищаем существующий select
+    classSelect.innerHTML = '';
+
+    // Добавляем опцию "Все классы"
+    const allOption = document.createElement('option');
+    allOption.value = 'all';
+    allOption.textContent = 'Все классы';
+    classSelect.appendChild(allOption);
+
+    // Добавляем классы в select
+    classes.forEach(className => {
+      const option = document.createElement('option');
+      option.value = className;
+      option.textContent = className;
+      classSelect.appendChild(option);
+    });
+
+    // Добавляем обработчик изменения
+    classSelect.addEventListener('change', async function () {
+      const selectedClass = this.value;
+      await updateSchedule(selectedClass);
+    });
+  }
+
+  // Модифицированная функция обновления расписания
+  async function updateSchedule(selectedClass) {
+    const scheduleContainer = document.querySelector('.schedule-container');
+    scheduleContainer.innerHTML = '';
+
+    try {
+      showLoading();
+
+      if (selectedClass === 'all') {
+        // Получаем расписание всех классов
+        const allSchedules = await fetchScheduleData('all');
+
+        if (allSchedules) {
+          Object.keys(allSchedules).forEach(className => {
+            if (className !== 'all') {
+              const classSchedule = generateScheduleFromData(allSchedules[className]);
+              scheduleContainer.appendChild(createClassHeader(className));
+              scheduleContainer.appendChild(classSchedule);
+            }
+          });
+        }
+      } else {
+        // Получаем расписание выбранного класса
+        const scheduleData = await fetchScheduleData(selectedClass);
+
+        if (scheduleData) {
+          const classSchedule = generateScheduleFromData(scheduleData);
+          scheduleContainer.appendChild(createClassHeader(selectedClass));
+          scheduleContainer.appendChild(classSchedule);
+        }
+      }
+    } finally {
+      hideLoading();
+    }
+  }
+
+  // Модифицированная функция инициализации
+  async function init() {
+    await initClassSelector();
+    await updateSchedule('9А'); // По умолчанию показываем расписание 9А класса
+  }
+
+  // Запускаем инициализацию при загрузке страницы
+  document.addEventListener('DOMContentLoaded', init);
+
+  // Функция для отправки запроса на сервер
+  async function fetchScheduleData(className) {
+    try {
+      // Добавляем индикатор загрузки
+      showLoading();
+
+      // Симулируем запрос на сервер (замените на реальный URL)
+      const response = await fetch(`/api/schedule/${className}`);
+
+      if (!response.ok) {
+        throw new Error(`Ошибка при получении данных: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Ошибка:', error);
+      hideLoading();
+      showAlert('Ошибка при загрузке расписания. Попробуйте позже.');
+      return null;
+    }
+  }
+
+  // Функция для показа индикатора загрузки
+  function showLoading() {
+    const loading = document.createElement('div');
+    loading.className = 'loading-overlay';
+    loading.innerHTML = `
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Загрузка...</span>
+        </div>
+    `;
+    document.querySelector('.class-schedule').appendChild(loading);
+  }
+
+  // Функция для скрытия индикатора загрузки
+  function hideLoading() {
+    const loading = document.querySelector('.loading-overlay');
+    if (loading) {
+      loading.remove();
+    }
+  }
+
+  // Функция для показа уведомления об ошибке
+  function showAlert(message) {
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-danger';
+    alert.textContent = message;
+    document.querySelector('.class-schedule').prepend(alert);
+
+    setTimeout(() => {
+      alert.remove();
+    }, 3000);
+  }
+
+  // Модифицированная функция для обновления расписания
+  async function updateSchedule(selectedClass) {
+    const scheduleContainer = document.querySelector('.schedule-container');
+    scheduleContainer.innerHTML = '';
+
+    try {
+      const scheduleData = await fetchScheduleData(selectedClass);
+
+      if (scheduleData) {
+        if (selectedClass === 'all') {
+          Object.keys(scheduleData).forEach(className => {
+            if (className !== 'all') {
+              const classSchedule = generateScheduleFromData(scheduleData[className]);
+              scheduleContainer.appendChild(createClassHeader(className));
+              scheduleContainer.appendChild(classSchedule);
+            }
+          });
+        } else {
+          const classSchedule = generateScheduleFromData(scheduleData);
+          scheduleContainer.appendChild(createClassHeader(selectedClass));
+          scheduleContainer.appendChild(classSchedule);
+        }
+      }
+    } finally {
+      hideLoading();
+    }
+  }
+
+  // Функция для генерации расписания из данных с сервера
+  function generateScheduleFromData(scheduleData) {
+    const container = document.createElement('div');
+    container.className = 'week-half';
+
+    scheduleData.days.forEach(day => {
+      const dayElement = createDayOfWeek(day.date, day.lessons);
+      container.appendChild(dayElement);
+    });
+
+    return container;
+  }
+
+  // Модифицированная функция для инициализации
+  function initClassSelector() {
+    const classSelect = document.getElementById('classSelect');
+    classSelect.addEventListener('change', async function () {
+      const selectedClass = this.value;
+      await updateSchedule(selectedClass);
+    });
+  }
+
+  // Добавьте эти стили в существующий CSS
+  const styles = `
+.loading-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+`;
+
+  // Добавляем стили в head
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+
+  // Инициализация при загрузке страницы
+  document.addEventListener('DOMContentLoaded', function () {
+    initClassSelector();
+    updateSchedule('9А'); // По умолчанию показываем расписание 9А класса
+  });
+</script>
+</html>

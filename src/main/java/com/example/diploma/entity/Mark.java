@@ -20,18 +20,17 @@ public class Mark {
   @Id
   @GeneratedValue(generator = "Short")
   private Long id;
-
   private short mark;
-
   @OneToOne
   private Student student;
-
   @OneToOne
   private Lesson lesson;
-
   private LocalDateTime mark_date;
 
-  private String markDescription;
-
-  private String reason;
+  public Mark(short mark, Student student, Lesson lesson, LocalDateTime mark_date) {
+    this.mark = mark;
+    this.student = student;
+    this.lesson = lesson;
+    this.mark_date = mark_date;
+  }
 }

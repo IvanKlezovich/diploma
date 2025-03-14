@@ -53,8 +53,24 @@
     }
 
     .btn-block {
-      width: 100%;
-      margin-top: 5px;
+      width: 35%;
+      color: #fff;
+      background-color: grey;
+      border-color: grey;
+    }
+
+    .btn-edit {
+      width: 25%;
+      color: #fff;
+      background-color: green;
+      border-color: green;
+    }
+
+    .btn-delete {
+      width: 25%;
+      color: #fff;
+      background-color: red;
+      border-color: red;
     }
 
     .form-group {
@@ -127,6 +143,10 @@
             <input id="phone" name="phone" type="tel">
           </div>
           <div class="form-group">
+            <label for="limit-date">Дата:</label>
+            <input id="limit-date" name="limit-date" required type="date">
+          </div>
+          <div class="form-group">
             <label for="role">Роль:</label>
             <select id="role" name="role">
               <option value="admin">Администратор</option>
@@ -141,6 +161,30 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="editModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Изменить роль</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#" id="roleForm" method="post">
+          <div class="mb-3">
+            <label class="form-label">Роль:</label>
+            <select class="form-select" id="role-type" name="role">
+              <option value="admin">Администратор</option>
+              <option value="teacher">Преподаватель</option>
+              <option value="parent">Родитель</option>
+              <option value="student">Ученик</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="submit">Изменить роль</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <main>
   <header>
     <h1>Панель администратора</h1>
@@ -148,17 +192,18 @@
   </header>
   <nav>
     <ul>
+      <li><a th:href="@{/admin/}">Домашняя страница</a></li>
       <li><a th:href="@{/admin/users}">Управление пользователями</a></li>
-      <li><a th:href="@{/admin/content}">Редактирование контента</a></li>
-      <li><a th:href="@{/admin/roles}">Распределение ролей</a></li>
+      <li><a th:href="@{/admin/content}">Редактирование предметов</a></li>
       <li><a th:href="@{/admin/classes}">Формирование классов</a></li>
+      <li><a th:href="@{/admin/sheduler}">Формирование расписания</a></li>
     </ul>
   </nav>
   <h2>Управление пользователями</h2>
   <button class="btn btn-primary" data-bs-target="#popupModal" data-bs-toggle="modal">
     Добавить человека
   </button>
-  <div th:object="${users}">
+  <div th:if="${users?.size() != null and users?.size() > 0}" th:object="${users}">
     <table>
       <tr>
         <th style="display: none;">ID</th>
@@ -175,7 +220,15 @@
         <td th:text="${user.role}"></td>
         <td th:text="${user.isBlocked ? 'Заблокирован' : 'Активен'}"></td>
         <td>
-          <button class="btn-block btn-secondary">Заблокировать</button>
+          <button class="btn-block btn-secondary"
+                  th:text="${user.isBlocked ? 'Активировать' : 'Заблокировать'}">
+          </button>
+          <button class="btn-edit" data-bs-target="#editModal" data-bs-toggle="modal">
+            Изменить
+          </button>
+          <button class="btn-delete" onclick="deleteUser()">
+            Удалить
+          </button>
         </td>
       </tr>
     </table>
@@ -184,7 +237,8 @@
     <p>&copy; 2025 Панель администратора | Разработано для администрирования</p>
   </footer>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const userForm = document.getElementById('userForm');
@@ -227,38 +281,133 @@
         console.error('Ошибка:', error);
         alert('Произошла ошибка при отправке данных: ' + error.message);
       }
+      location.reload();
     });
   });
   document.querySelectorAll('.btn-block.btn-secondary').forEach(button => {
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', async function (e) {
       e.preventDefault();
 
       const userId = this.closest('tr').querySelector('td:first-child').textContent;
 
-      fetch('/dairy-project/admin/users/block', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: {userId: userId}
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const statusCell = this.closest('tr').querySelector('td:nth-child(4)');
-          statusCell.textContent = 'Заблокирован';
-          this.textContent = 'Разблокировать';
-          this.classList.remove('btn-secondary');
-          this.classList.add('btn-danger');
-        } else {
-          alert('Ошибка при блокировке пользователя: ' + data.message);
+      try {
+        const response = await fetch('/dairy-project/admin/users/block', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({userId: userId})
+        });
+
+        // Добавляем отладочную информацию
+        console.log('Ответ сервера:', {
+          status: response.status,
+          ok: response.ok,
+          headers: Object.fromEntries(response.headers.entries())
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.log('Ошибка сервера:', errorData);
+          throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
         }
-      })
-      .catch(error => {
-        alert('Произошла ошибка при отправке данных: ' + error.message);
+
+      } catch (error) {
+        console.error('Ошибка при блокировке пользователя:', error);
+        alert(`Произошла ошибка при блокировке пользователя: ${error.message}`);
+      }
+      location.reload();
+    });
+  });
+  document.querySelectorAll('.btn-edit').forEach(button => {
+    button.addEventListener('click', async function (e) {
+      e.preventDefault();
+
+      // Получаем данные пользователя из строки таблицы
+      const row = this.closest('tr');
+      const userId = row.cells[0].textContent;
+      const currentRole = row.cells[3].textContent;
+
+      // Находим и заполняем модальное окно
+      const editModal = document.getElementById('editModal');
+      const roleSelect = editModal.querySelector('#role-type');
+
+      // Выбираем текущую роль в селекте
+      roleSelect.value = currentRole;
+
+      // Показываем модальное окно
+      const modal = new bootstrap.Modal(editModal);
+      modal.show();
+
+      // Обработка формы изменения роли
+      const roleForm = document.getElementById('roleForm');
+      roleForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        try {
+          const newRole = roleSelect.value;
+
+          // Отправляем запрос на изменение роли
+          const response = await fetch(`/dairy-project/admin/users/${userId}/role`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({role: newRole})
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
+          }
+
+          modal.hide();
+
+          alert('Роль успешно изменена!');
+
+        } catch (error) {
+          console.error('Ошибка при изменении роли:', error);
+          alert(`Произошла ошибка при изменении роли: ${error.message}`);
+        }
+        location.reload();
       });
     });
   });
+
+  async function deleteUser() {
+    // Показываем диалог подтверждения
+    if (!confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+      return;
+    }
+
+    try {
+      // Получаем ID пользователя из таблицы
+      const row = document.querySelector('.btn-delete').closest('tr');
+      const userId = row.cells[0].textContent === 'Иванов Иван' ? 'user1' : 'user2';
+
+      // Отправляем DELETE-запрос на сервер
+      const response = await fetch(`/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Ошибка при удалении пользователя: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Пользователь успешно удален:', result);
+
+      // Обновляем таблицу
+      updateTable(result);
+
+    } catch (error) {
+      console.error('Ошибка:', error);
+      alert('Произошла ошибка при удалении пользователя');
+    }
+  }
 </script>
 </body>
 </html>

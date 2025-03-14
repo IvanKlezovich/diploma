@@ -30,4 +30,9 @@ public class Form implements Serializable {
 
   @OneToOne
   private Teacher classTeacher;
+
+  public Form(String name, Teacher classTeacher) {
+    this.name = name;
+    this.classTeacher = classTeacher;
+  }
 }

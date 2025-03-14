@@ -1,10 +1,12 @@
 package com.example.diploma.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +31,12 @@ public class Teacher extends User implements Serializable {
   @OneToMany
   private Set<Lesson> lessons;
 
-  public Teacher(Name name, String email, String phone, String login, String password, Role role) {
-    super(name, email, phone, login, password, role);
+  @Column(insertable = false, updatable = false)
+  private Role role = Role.TEACHER;
+
+  public Teacher(Name name, String email,
+      String phone, String login, String password,
+      LocalDate timeLimit) {
+    super(name, email, phone, login, password, timeLimit);
   }
 }

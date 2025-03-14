@@ -26,17 +26,15 @@ public class AdminController {
   }
 
   @RequestMapping("/content")
-  public String content() {
+  public String content(Model model) {
+    model.addAttribute("lessons", adminFacade.getAllLessons());
     return "admin/content";
   }
 
-  @RequestMapping("/roles")
-  public String roles() {
-    return "admin/roles";
-  }
 
   @RequestMapping("/classes")
-  public String form() {
+  public String form(Model model) {
+    model.addAttribute("forms", adminFacade.getAllForms());
     return "admin/classes";
   }
 }

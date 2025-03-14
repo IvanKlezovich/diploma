@@ -115,10 +115,22 @@
             <input id="grade" max="5" min="0" name="grade" required type="number">
           </div>
           <div class="form-group">
+            <label for="lesson">Урок:</label>
+            <select id="lesson" name="lesson">
+              <option value="">Выберете урок</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="class">Класс:</label>
+            <select id="class" name="class">
+              <option value="">Выберете класс</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="date">Дата:</label>
             <input id="date" name="date" required type="date">
           </div>
-          <button type="submit">Добавить оценку</button>
+          <button class="btn btn-primary" type="submit">Добавить оценку</button>
         </form>
       </div>
     </div>
@@ -141,6 +153,9 @@
     </ul>
   </nav>
   <h2>Оценки</h2>
+  <button class="btn btn-primary" data-bs-target="#addGrade" data-bs-toggle="modal">
+    Добавить отметку
+  </button>
   <table>
     <tr>
       <th>Ученик</th>
@@ -163,7 +178,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const userForm = document.getElementById('gradeForm');
-    const popupModal = document.getElementById('addGrade'); // Без # в идентификаторе
+    const popupModal = document.getElementById('addGrade');
 
     if (!userForm || !popupModal) {
       console.error('Не удалось найти один из необходимых элементов');
@@ -175,13 +190,13 @@
 
       const formData = new FormData(this);
 
-      if (!formData.get('login') || !formData.get('email') || !formData.get('firstname')) {
+      if (!formData.get('grade') || !formData.get('date')) {
         alert('Заполните обязательные поля!');
         return;
       }
 
       try {
-        const response = await fetch('/dairy-project/admin/users/add', {
+        const response = await fetch('/dairy-project/teacher/grades/add', {
           method: 'POST',
           body: formData
         });
@@ -191,7 +206,7 @@
           throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
         }
 
-        alert('Пользователь добавлен успешно!');
+        alert('Отметка добавлена успешно!');
         this.reset();
 
         // Используем Bootstrap методы для работы с модальным окном
@@ -202,36 +217,6 @@
         console.error('Ошибка:', error);
         alert('Произошла ошибка при отправке данных: ' + error.message);
       }
-    });
-  });
-  document.querySelectorAll('.btn-block.btn-secondary').forEach(button => {
-    button.addEventListener('click', function (e) {
-      e.preventDefault();
-
-      const userId = this.closest('tr').querySelector('td:first-child').textContent;
-
-      fetch('/dairy-project/admin/users/block', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: {userId: userId}
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const statusCell = this.closest('tr').querySelector('td:nth-child(4)');
-          statusCell.textContent = 'Заблокирован';
-          this.textContent = 'Разблокировать';
-          this.classList.remove('btn-secondary');
-          this.classList.add('btn-danger');
-        } else {
-          alert('Ошибка при блокировке пользователя: ' + data.message);
-        }
-      })
-      .catch(error => {
-        alert('Произошла ошибка при отправке данных: ' + error.message);
-      });
     });
   });
 </script>

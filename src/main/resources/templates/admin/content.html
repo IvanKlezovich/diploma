@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель администратора</title>
-  <!-- Bootstrap CSS -->
   <link crossorigin="anonymous"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         rel="stylesheet">
-  <!-- Дополнительные стили -->
   <style>
     * {
       margin: 0;
@@ -95,6 +93,25 @@
   </style>
 </head>
 <body>
+<div class="modal fade" id="addLesson" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Добавить запись</h5>
+        <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#" id="lessonForm" method="post">
+          <div class="form-group">
+            <label for="lessonName">Название предмета:</label>
+            <input id="lessonName" name="lessonName" required type="text">
+          </div>
+          <button class="btn btn-primary" type="submit">Добавить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <main>
   <header>
     <h1>Панель администратора</h1>
@@ -102,72 +119,92 @@
   </header>
   <nav>
     <ul>
-      <li><a onclick="showSection('users')" th:href="@{/admin/users}">Управление пользователями</a>
-      </li>
-      <li><a onclick="showSection('content')" th:href="@{/admin/content}">Редактирование
-        контента</a>
-      </li>
-      <li><a onclick="showSection('roles')" th:href="@{/admin/roles}">Распределение ролей</a></li>
-      <li><a onclick="showSection('classes')" th:href="@{/admin/classes}">Формирование классов</a>
-      </li>
+      <li><a th:href="@{/admin/}">Домашняя страница</a></li>
+      <li><a th:href="@{/admin/users}">Управление пользователями</a></li>
+      <li><a th:href="@{/admin/content}">Редактирование предметов</a></li>
+      <li><a th:href="@{/admin/classes}">Формирование классов</a></li>
+      <li><a th:href="@{/admin/sheduler}">Формирование расписания</a></li>
     </ul>
   </nav>
-  <main>
-    <section id="content">
-      <h2>Редактирование контента</h2>
-      <div class="add-form">
-        <h3>Добавить запись</h3>
-        <form action="#" method="post">
-          <div class="form-group">
-            <label for="table-name">Таблица:</label>
-            <select id="table-name" name="table-name">
-              <option value="subjects">Предметы</option>
-              <option value="roles">Роли</option>
-              <option value="classes">Классы</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="field-name">Поле:</label>
-            <input id="field-name" name="field-name" required type="text">
-          </div>
-          <div class="form-group">
-            <label for="value">Значение:</label>
-            <input id="value" name="value" required type="text">
-          </div>
-          <button type="submit">Добавить</button>
-        </form>
-      </div>
-      <table>
-        <tr>
-          <th>Таблица</th>
-          <th>Поле</th>
-          <th>Значение</th>
-          <th>Действия</th>
-        </tr>
-        <tr>
-          <td>Предметы</td>
-          <td>Математика</td>
-          <td>Математика</td>
-          <td>
-            <button class="btn-edit" type="button">Редактировать</button>
-          </td>
-        </tr>
-      </table>
-    </section>
-  </main>
+  <h2>Редактирование уроков</h2>
+  <div>
+    <button class="btn btn-primary" data-bs-target="#addLesson" data-bs-toggle="modal">
+      Добавить урок
+    </button>
+  </div>
+  <div
+      th:if="${lessons?.size() != null and lessons?.size() > 0}"
+      th:object="${lessons}">
+    <table>
+      <tr>
+        <th style="display: none">ID</th>
+        <th>Предмет</th>
+        <th>Действия</th>
+      </tr>
+      <tr th:each="lesson : ${lessons}">
+        <td style="display: none" th:text="${lesson.lessonId()}"></td>
+        <td th:text="${lesson.lessonName()}"></td>
+        <td>
+          <button class="btn-edit" data-bs-target="#editLesson" data-bs-toggle="modal">
+            Редактировать
+          </button>
+          <button class="btn-delete" data-bs-target="#deleteLesson" data-bs-toggle="modal">
+            Удалить
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
   <footer>
     <p>&copy; 2025 Панель администратора | Разработано для администрирования</p>
   </footer>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => {
-      section.classList.remove('active');
-      section.classList.add('hidden');
+  document.addEventListener('DOMContentLoaded', function () {
+    const userForm = document.getElementById('lessonForm');
+    const popupModal = document.getElementById('addLesson');
+
+    if (!userForm || !popupModal) {
+      console.error('Не удалось найти один из необходимых элементов');
+      return;
+    }
+
+    userForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+
+      if (!formData.get('lessonName')) {
+        alert('Заполните обязательные поля!');
+        return;
+      }
+
+      try {
+        const response = await fetch('/dairy-project/admin/lessons/add', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
+        }
+
+        alert('Предмет добавлен успешно!');
+        this.reset();
+
+        // Используем Bootstrap методы для работы с модальным окном
+        const modal = bootstrap.Modal.getInstance(popupModal);
+        modal.hide();
+
+      } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Произошла ошибка при отправке данных: ' + error.message);
+      }
+      location.reload();
     });
-    document.getElementById(sectionId).classList.add('active');
-    document.getElementById(sectionId).classList.remove('hidden');
-  }
+  });
 </script>
 </body>
 </html>

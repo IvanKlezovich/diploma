@@ -34,4 +34,8 @@ public class Lesson implements Serializable {
 
   @OneToMany
   private List<Homework> homework;
+
+  public Lesson(String title) {
+    this.title = title;
+  }
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -46,15 +47,23 @@ public class User {
   @Column(insertable = false, updatable = false)
   private Role role;
 
+  @Column(insertable = false, updatable = false)
+  private LocalDate created;
+
+  private LocalDate timeLimit;
+
   private Boolean isBlocked;
 
-  public User(Name name, String email, String phone, String login, String password, Role role) {
+  public User(Name name, String email,
+      String phone, String login, String password,
+      LocalDate timeLimit) {
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.login = login;
     this.password = password;
-    this.role = role;
+    this.timeLimit = timeLimit;
     isBlocked = false;
+    created = LocalDate.now();
   }
 }
