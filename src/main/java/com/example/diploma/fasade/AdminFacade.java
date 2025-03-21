@@ -78,9 +78,9 @@ public class AdminFacade {
     return userService.getAllUsers();
   }
 
-  public Boolean blockUser(String userId) {
+  public void blockUser(String userId) {
     UUID blockUserId = UUID.fromString(userId);
-    return userService.blockUser(blockUserId);
+    userService.blockUser(blockUserId);
   }
 
   public Lesson addLesson(CreateLessonDto createLessonDto) {
@@ -133,5 +133,9 @@ public class AdminFacade {
     student.setForm(formService.findById(
         UUID.fromString(addStudentToFormDto.classId())));
     return studentMapper.toStudentDto(studentService.addStudent(student));
+  }
+
+  public List<StudentDto> getStudentByClass(UUID classId) {
+    return studentMapper.toStudentDtoList(studentService.getStudentByClass(classId));
   }
 }

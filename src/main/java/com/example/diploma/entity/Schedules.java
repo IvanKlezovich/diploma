@@ -7,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -36,7 +36,11 @@ public class Schedules {
   @OneToMany
   private List<Lesson> lesson;
 
-  private LocalDateTime startTime;
+  private LocalTime startTime;
+
+  private LocalTime endTime;
+
+  private String room;
 
   @Enumerated(EnumType.STRING)
   private Day days;

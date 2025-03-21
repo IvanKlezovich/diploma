@@ -5,7 +5,9 @@ import com.example.diploma.dto.BlockUserDto;
 import com.example.diploma.dto.ClassDto;
 import com.example.diploma.dto.CreateFormDto;
 import com.example.diploma.dto.CreateLessonDto;
+import com.example.diploma.dto.CreateScheduler;
 import com.example.diploma.dto.CreateUserDto;
+import com.example.diploma.dto.LessonDto;
 import com.example.diploma.dto.RoleNameDto;
 import com.example.diploma.dto.StudentDto;
 import com.example.diploma.dto.TeacherDto;
@@ -14,11 +16,15 @@ import com.example.diploma.entity.Lesson;
 import com.example.diploma.entity.User;
 import com.example.diploma.fasade.AdminFacade;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,11 +77,25 @@ public class AdminApiController {
     return ResponseEntity.ok().body(form);
   }
 
+  @PostMapping("/scheduler/add")
+  public ResponseEntity<Void> addScheduler(@RequestBody CreateScheduler createScheduler) {
+    return ResponseEntity.ok().body(null);
+  }
+
   @PostMapping("/classes/add-student")
   public ResponseEntity<StudentDto> getStudent(
       @RequestBody AddStudentToFormDto addStudentToFormDto) {
-    System.out.println(addStudentToFormDto.toString());
     return ResponseEntity.ok().body(adminFacade.addStudentToClass(addStudentToFormDto));
+  }
+
+  @GetMapping("class/{classId}/list")
+  public ResponseEntity<List<StudentDto>> getAllStudents(@PathVariable String classId) {
+    return ResponseEntity.ok().body(adminFacade.getStudentByClass(UUID.fromString(classId)));
+  }
+
+  @GetMapping("/lesson/list")
+  public ResponseEntity<List<LessonDto>> getLessonList() {
+    return ResponseEntity.ok().body(adminFacade.getAllLessons());
   }
 
   @GetMapping("/teachers/list")

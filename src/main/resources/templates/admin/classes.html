@@ -4,96 +4,11 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель администратора</title>
-  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/css/baseStyle.css}" type="text/css">
   <link crossorigin="anonymous"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         rel="stylesheet">
-  <!-- Дополнительные стили -->
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    nav {
-      background-color: #2196F3;
-      padding: 15px;
-      border-radius: 8px;
-    }
-
-    nav ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      margin: 0 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      border-radius: 8px;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-      border-radius: 8px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    .btn-block {
-      width: 100%;
-      margin-top: 5px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    main {
-      max-width: 1200px;
-      min-width: 750px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    header {
-      background-color: #f0f0f0;
-      padding: 20px;
-      text-align: center;
-      border-radius: 8px;
-    }
-  </style>
 </head>
 <body>
 <div class="modal fade" id="createClass" role="dialog" tabindex="-1">
@@ -148,6 +63,30 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="editClass" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Список учеников класса</h5>
+        <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+        <table>
+          <tr>
+            <th style="display: none">ID</th>
+            <th>№ в журнале</th>
+            <th>Ученик</th>
+            <th>Действие</th>
+          </tr>
+          <tbody id="student-list"></tbody>
+        </table>
+      </div>
+      <button class="btn btn-primary" data-bs-target="#addStudentToClass" data-bs-toggle="modal">
+        Добавить ученика к классу
+      </button>
+    </div>
+  </div>
+</div>
 <main>
   <header>
     <h1>Панель администратора</h1>
@@ -159,16 +98,13 @@
       <li><a th:href="@{/admin/users}">Управление пользователями</a></li>
       <li><a th:href="@{/admin/content}">Редактирование предметов</a></li>
       <li><a th:href="@{/admin/classes}">Формирование классов</a></li>
-      <li><a th:href="@{/admin/sheduler}">Формирование расписания</a></li>
+      <li><a th:href="@{/admin/scheduler}">Формирование расписания</a></li>
     </ul>
   </nav>
   <section id="classes">
     <h2>Формирование классов</h2>
     <button class="btn btn-primary" data-bs-target="#createClass" data-bs-toggle="modal">
       Добавить класс
-    </button>
-    <button class="btn btn-primary" data-bs-target="#addStudentToClass" data-bs-toggle="modal">
-      Добавить ученика к классу
     </button>
     <div th:if="${forms?.size() != null and forms?.size() > 0}" th:object="${forms}">
       <table>
@@ -183,7 +119,10 @@
           <td th:text="${form.classname}"></td>
           <td th:text="${form.teacher.firstname()} + ' ' + ${form.teacher().lastname()}"></td>
           <td>
-            <button class="btn-edit" type="button">Редактировать</button>
+            <button class="btn-edit btn-secondary" data-bs-target="#editClass"
+                    data-bs-toggle="modal">
+              Редактировать
+            </button>
             <button class="btn-delete" type="button">Удалить</button>
           </td>
         </tr>
@@ -195,186 +134,6 @@
   </footer>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  async function fetchTeachers() {
-    try {
-      const response = await fetch('/dairy-project/admin/teachers/list');
-      if (!response.ok) {
-        throw new Error(`Ошибка при получении списка учителей: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Ошибка при получении списка учителей:', error);
-      return [];
-    }
-  }
-
-  async function updateTeacherSelect(teachers) {
-    const teacherSelect = document.getElementById('class-teacher');
-    teacherSelect.innerHTML = '<option value="">Выберите учителя</option>';
-    teachers.forEach(teacher => {
-      const option = document.createElement('option');
-      option.value = teacher.id;
-      option.textContent = `${teacher.lastname} ${teacher.firstname} ${teacher.middlename}`;
-      teacherSelect.appendChild(option);
-    });
-  }
-
-  document.getElementById('createClass').addEventListener('show.bs.modal', async function () {
-    const teachers = await fetchTeachers();
-    await updateTeacherSelect(teachers);
-  });
-  document.addEventListener('DOMContentLoaded', function () {
-    const addClassForm = document.getElementById('addClass');
-    const classModal = document.getElementById('createClass');
-
-    if (!addClassForm || !classModal) {
-      console.error('Не удалось найти один из необходимых элементов');
-      return;
-    }
-
-    addClassForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-
-      if (!formData.get('classname') || !formData.get('teacher')) {
-        alert('Заполните все обязательные поля!');
-        return;
-      }
-
-      try {
-        const response = await fetch('/dairy-project/admin/class/add', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            classname: formData.get('classname'),
-            teacherId: formData.get('teacher')
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-        }
-
-        const modal = bootstrap.Modal.getInstance(classModal);
-        modal.hide();
-        alert('Класс успешно создан!');
-        location.reload();
-
-      } catch (error) {
-        console.error('Ошибка при создании класса:', error);
-        alert(`Произошла ошибка при создании класса: ${error.message}`);
-        location.reload();
-      }
-    });
-  });
-
-  async function fetchClasses() {
-    try {
-      const response = await fetch('/dairy-project/admin/classes/list');
-      if (!response.ok) {
-        throw new Error(`Ошибка при получении списка учеников: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Ошибка при получении списка учеников:', error);
-      return [];
-    }
-  }
-
-  async function updateClassesSelect(classes) {
-    const classSelect = document.getElementById('student-class');
-    classSelect.innerHTML = '<option value="">Выберите Класс</option>';
-    classes.forEach(clas => {
-      const option = document.createElement('option');
-      option.value = clas.id;
-      option.textContent = `${clas.classname} ${clas.teacherName}`;
-      classSelect.appendChild(option);
-    });
-  }
-
-  async function fetchStudents() {
-    try {
-      const response = await fetch('/dairy-project/admin/student/list');
-      if (!response.ok) {
-        throw new Error(`Ошибка при получении списка учеников: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Ошибка при получении списка учеников:', error);
-      return [];
-    }
-  }
-
-  async function updateStudentSelect(students) {
-    const studentSelect = document.getElementById('student-name');
-    studentSelect.innerHTML = '<option value="">Выберите ученика</option>';
-    students.forEach(student => {
-      const option = document.createElement('option');
-      option.value = student.id;
-      option.textContent = `${student.lastname} ${student.firstname} ${student.middlename}`;
-      studentSelect.appendChild(option);
-    });
-  }
-
-  document.getElementById('addStudentToClass').addEventListener('show.bs.modal', async function () {
-    const students = await fetchStudents();
-    const classes = await fetchClasses();
-    await updateStudentSelect(students);
-    await updateClassesSelect(classes);
-  });
-  document.addEventListener('DOMContentLoaded', function () {
-    const addStudentToClass = document.getElementById('addStudentForm');
-    const classModal = document.getElementById('addStudentToClass');
-
-    if (!addStudentToClass || !classModal) {
-      console.error('Не удалось найти один из необходимых элементов');
-      return;
-    }
-
-    addStudentToClass.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-
-      // if (!formData.get('student-name') || !formData.get('student-class')) {
-      //   alert('Заполните все обязательные поля!');
-      //   return;
-      // }
-
-      try {
-        const response = await fetch('/dairy-project/admin/classes/add-student', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            studentId: formData.get('student-name'),
-            classId: formData.get('student-class')
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-        }
-
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addStudentToClass'));
-        modal.hide();
-        alert('Ученик успешно добавлен к классу!');
-        location.reload();
-
-      } catch (error) {
-        console.error('Ошибка при добавлении ученика:', error);
-        alert(`Произошла ошибка при добавлении ученика: ${error.message}`);
-        location.reload();
-      }
-    });
-  });
-</script>
+<script th:src="@{/js/admin/classes.js}"></script>
 </body>
 </html>

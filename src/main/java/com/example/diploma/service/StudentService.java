@@ -11,4 +11,6 @@ public interface StudentService {
   Student getStudent(UUID id);
 
   List<Student> findAll();
+
+  List<Student> getStudentByClass(UUID classId);
 }

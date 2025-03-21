@@ -25,7 +25,8 @@ public class SecurityConfig {
   public UserDetailsService userDetailsService() {
     InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
     manager.createUser(
-        User.withUsername("user").password(passwordEncoder().encode("password")).roles("USER")
+        User.withUsername("user")
+            .password(passwordEncoder().encode("password")).roles("USER")
             .build());
     manager.createUser(
         User.withUsername("admin").password(passwordEncoder().encode("password")).roles("ADMIN")
@@ -51,7 +52,7 @@ public class SecurityConfig {
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .requestMatchers("/teacher/**").hasRole("TEACHER")
             .requestMatchers("/parent/**").hasRole("PARENT")
-            .requestMatchers("/parent/**").hasRole("PARENT")
+            .requestMatchers("/user/**").hasRole("STUDENT")
             .anyRequest()
             .authenticated())
         .formLogin(form -> form.loginPage("/login")
