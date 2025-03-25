@@ -84,7 +84,8 @@ public class AdminFacade {
   }
 
   public Lesson addLesson(CreateLessonDto createLessonDto) {
-    return lessonService.addLesson(new Lesson(createLessonDto.lessonName()));
+    return lessonService.addLesson(new Lesson(createLessonDto.lessonName(),
+            createLessonDto.lessonDescription()));
   }
 
   public List<LessonDto> getAllLessons() {

@@ -82,7 +82,7 @@ async function updateTeacherSelect(teachers) {
   teachers.forEach(teacher => {
     const option = document.createElement('option');
     option.value = teacher.id;
-    option.textContent = `${teacher.lastname} ${teacher.firstname}`;
+    option.textContent = `${teacher.firstname} ${teacher.lastname}`;
     teacherSelect.appendChild(option);
   });
 }

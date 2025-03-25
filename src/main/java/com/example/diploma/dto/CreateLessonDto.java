@@ -1,5 +1,5 @@
 package com.example.diploma.dto;
 
-public record CreateLessonDto(String lessonName) {
+public record CreateLessonDto(String lessonName, String lessonDescription) {
 
 }

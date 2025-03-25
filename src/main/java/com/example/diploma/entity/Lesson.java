@@ -38,7 +38,8 @@ public class Lesson implements Serializable {
   @OneToMany
   private List<Homework> homework;
 
-  public Lesson(String title) {
+  public Lesson(String title, String description) {
     this.title = title;
+    this.description = description;
   }
 }

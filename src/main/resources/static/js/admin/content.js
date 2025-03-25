@@ -20,13 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       const response = await fetch('/dairy-project/admin/lessons/add', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          lessonName: formData.get('lessonName'),
-          description: formData.get('lessonDescription')
-        })
+        body:  formData
       });
 
       if (!response.ok) {

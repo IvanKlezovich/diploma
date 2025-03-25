@@ -11,15 +11,9 @@ import com.example.diploma.dto.LessonDto;
 import com.example.diploma.dto.RoleNameDto;
 import com.example.diploma.dto.StudentDto;
 import com.example.diploma.dto.TeacherDto;
-import com.example.diploma.entity.Form;
-import com.example.diploma.entity.Lesson;
 import com.example.diploma.entity.User;
 import com.example.diploma.fasade.AdminFacade;
-import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -38,9 +35,9 @@ public class AdminApiController {
   private final AdminFacade adminFacade;
 
   @PostMapping("/users/add")
-  public ResponseEntity<User> addUser(CreateUserDto createUserDto) {
-    User users = adminFacade.addPeople(createUserDto);
-    return ResponseEntity.ok().body(users);
+  public ResponseEntity<Void> addUser(CreateUserDto createUserDto) {
+    adminFacade.addPeople(createUserDto);
+    return ResponseEntity.ok().build();
   }
 
   @PatchMapping("/users/block")
@@ -66,15 +63,15 @@ public class AdminApiController {
   }
 
   @PostMapping("/lessons/add")
-  public ResponseEntity<Lesson> addLesson(CreateLessonDto createLessonDto) {
-    Lesson lesson = adminFacade.addLesson(createLessonDto);
-    return ResponseEntity.ok().body(lesson);
+  public ResponseEntity<Void> addLesson(CreateLessonDto createLessonDto) {
+    adminFacade.addLesson(createLessonDto);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/class/add")
-  public ResponseEntity<Form> getForm(@RequestBody CreateFormDto createFormDto) {
-    Form form = adminFacade.addForm(createFormDto);
-    return ResponseEntity.ok().body(form);
+  public ResponseEntity<Void> getForm(@RequestBody CreateFormDto createFormDto) {
+    adminFacade.addForm(createFormDto);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/scheduler/add")

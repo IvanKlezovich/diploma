@@ -1,0 +1,20 @@
+.btn-block {
+    width: 35%;
+    color: #fff;
+    background-color: grey;
+    border-color: grey;
+}
+
+.btn-edit {
+    width: 30%;
+    color: #fff;
+    background-color: green;
+    border-color: green;
+}
+
+.btn-delete {
+    width: 25%;
+    color: #fff;
+    background-color: red;
+    border-color: red;
+}
