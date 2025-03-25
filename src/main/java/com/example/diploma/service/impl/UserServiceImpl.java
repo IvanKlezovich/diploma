@@ -24,13 +24,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public Boolean blockUser(UUID blockUserId) {
-    try {
-      userRepository.blockUser(blockUserId);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
+  public void blockUser(UUID blockUserId) {
+    userRepository.blockUser(blockUserId);
   }
 
   @Override

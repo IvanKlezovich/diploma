@@ -5,7 +5,6 @@ async function fetchClasses() {
       throw new Error(
           `Ошибка при получении списка классов: ${response.status}`);
     }
-
     return await response.json();
   } catch (error) {
     console.error('Ошибка при получении списка классов:', error);
@@ -16,12 +15,10 @@ async function fetchClasses() {
 async function fetchLessons() {
   try {
     const response = await fetch('/dairy-project/admin/lesson/list');
-
     if (!response.ok) {
       throw new Error(
           `Ошибка при получении списка классов: ${response.status}`);
     }
-
     return await response.json();
   } catch (error) {
     console.error('Ошибка при получении списка классов:', error);
@@ -30,11 +27,6 @@ async function fetchLessons() {
 }
 
 async function updateClassesSelector(forms) {
-  const formSelector = document.getElementById("class-name");
-  if (!formSelector) {
-    console.error('Не удалось найти один из необходимых элементов');
-    return;
-  }
   console.log(forms)
   const classesSelect = document.getElementById('class-name');
   classesSelect.innerHTML = '<option value="">Выберите класс</option>';
@@ -47,11 +39,7 @@ async function updateClassesSelector(forms) {
 }
 
 async function updateLessonsSelector(lessons) {
-  const lessonSelector = document.getElementById("selector-lesson");
-  if (!lessonSelector) {
-    console.error('Не удалось найти один из необходимых элементов');
-    return;
-  }
+  console.log(lessons);
   const lessonsSelect = document.getElementById('selector-lesson');
   lessonsSelect.innerHTML = '<option value="">Выберите урок</option>';
   lessons.forEach(lesson => {
@@ -64,11 +52,12 @@ async function updateLessonsSelector(lessons) {
 
 document.getElementById('addLessonToScheduler').addEventListener(
     'show.bs.modal', async function () {
-      const classes = fetchClasses();
-      const lessons = fetchLessons();
+      const classes = await fetchClasses();
+      const lessons = await fetchLessons();
 
-      await updateClassesSelector(classes);
+      console.log(classes, lessons)
       await updateLessonsSelector(lessons);
+      await updateClassesSelector(classes);
     })
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -99,8 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          classname: formData.get('classname'),
-          teacherId: formData.get('teacher')
+          lessonId: formData.get('lesson'),
+          classId: formData.get('class'),
+          apartment: formData.get('apartment'),
+          startTime: formData.get('lesson-time-begin'),
+          endTime: formData.get('lesson-time-end'),
+          dayOfWeek: formData.get('days')
         })
       });
 
@@ -110,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             errorData.message || `Ошибка сервера: ${response.status}`);
       }
 
-      const modal = bootstrap.Modal.getInstance(classModal);
+      const modal = bootstrap.Modal.getInstance(schedulerModal);
       modal.hide();
       alert('Расписание успешно создано!');
       location.reload();

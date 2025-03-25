@@ -5,6 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.time.LocalTime;
@@ -33,8 +34,8 @@ public class Schedules {
   @OneToOne
   private Form form;
 
-  @OneToMany
-  private List<Lesson> lesson;
+  @ManyToOne
+  private Lesson lesson;
 
   private LocalTime startTime;
 

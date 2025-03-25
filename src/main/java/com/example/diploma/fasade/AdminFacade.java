@@ -4,6 +4,7 @@ import com.example.diploma.dto.AddStudentToFormDto;
 import com.example.diploma.dto.ClassDto;
 import com.example.diploma.dto.CreateFormDto;
 import com.example.diploma.dto.CreateLessonDto;
+import com.example.diploma.dto.CreateScheduler;
 import com.example.diploma.dto.CreateUserDto;
 import com.example.diploma.dto.FormDto;
 import com.example.diploma.dto.LessonDto;
@@ -11,10 +12,12 @@ import com.example.diploma.dto.RoleNameDto;
 import com.example.diploma.dto.StudentDto;
 import com.example.diploma.dto.TeacherDto;
 import com.example.diploma.entity.Admin;
+import com.example.diploma.entity.Day;
 import com.example.diploma.entity.Form;
 import com.example.diploma.entity.Lesson;
 import com.example.diploma.entity.Name;
 import com.example.diploma.entity.Parent;
+import com.example.diploma.entity.Schedules;
 import com.example.diploma.entity.Student;
 import com.example.diploma.entity.Teacher;
 import com.example.diploma.entity.User;
@@ -26,12 +29,12 @@ import com.example.diploma.service.AdminService;
 import com.example.diploma.service.FormService;
 import com.example.diploma.service.LessonService;
 import com.example.diploma.service.ParentService;
+import com.example.diploma.service.SchedulerService;
 import com.example.diploma.service.StudentService;
 import com.example.diploma.service.TeacherService;
 import com.example.diploma.service.UserService;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -46,36 +49,47 @@ public class AdminFacade {
   private final AdminService adminService;
   private final LessonService lessonService;
   private final FormService formService;
+  private final SchedulerService schedulerService;
 
   private final LessonMapper lessonMapper;
   private final TeacherMapper teacherMapper;
   private final ClassMapper formMapper;
   private final StudentMapper studentMapper;
 
-  public User addPeople(CreateUserDto createUserDto) {
-    return switch (createUserDto.role()) {
-      case "admin" -> adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), "password", createUserDto.timeLimit()));
-      case "parent" -> parentService.addParent(new Parent(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), "password",
-          createUserDto.job(), createUserDto.description(), List.of(new Student()),
-          createUserDto.timeLimit()));
-      case "teacher" -> teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), "password",
-          createUserDto.timeLimit()));
-      case "student" -> studentService.addStudent(new Student(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), "password",
-          createUserDto.timeLimit()));
-      default -> null;
-    };
-  }
-
-  public List<User> getAllUsers() {
-    return userService.getAllUsers();
+  public void addPeople(CreateUserDto createUserDto) {
+    switch (createUserDto.role()) {
+      case "admin": {
+        adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
+            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+            createUserDto.phone(), createUserDto.login(), "password", createUserDto.timeLimit()));
+        break;
+      }
+      case "parent": {
+        parentService.addParent(new Parent(new Name(createUserDto.firstname(),
+            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+            createUserDto.phone(), createUserDto.login(), "password",
+            createUserDto.job(), createUserDto.description(), List.of(new Student()),
+            createUserDto.timeLimit()));
+        break;
+      }
+      case "teacher": {
+        teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
+            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+            createUserDto.phone(), createUserDto.login(), "password",
+            createUserDto.timeLimit()));
+        break;
+      }
+      case "student": {
+        studentService.addStudent(new Student(new Name(createUserDto.firstname(),
+            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+            createUserDto.phone(), createUserDto.login(), "password",
+            createUserDto.timeLimit()));
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 
   public void blockUser(String userId) {
@@ -83,31 +97,35 @@ public class AdminFacade {
     userService.blockUser(blockUserId);
   }
 
-  public Lesson addLesson(CreateLessonDto createLessonDto) {
-    return lessonService.addLesson(new Lesson(createLessonDto.lessonName(),
-            createLessonDto.lessonDescription()));
-  }
-
-  public List<LessonDto> getAllLessons() {
-    return lessonService.getAllLessons().stream()
-        .map(lessonMapper::toLessonDto)
-        .collect(Collectors.toList());
+  public void addLesson(CreateLessonDto createLessonDto) {
+    lessonService.addLesson(new Lesson(createLessonDto.lessonName(),
+        createLessonDto.lessonDescription()));
   }
 
   public void changeRole(RoleNameDto roleNameDto) {
     userService.changeRoleName(roleNameDto);
   }
 
+  public void addForm(CreateFormDto createFormDto) {
+    formService.save(
+        new Form(createFormDto.classname(),
+            teacherService.getTeacherById(UUID.fromString(createFormDto.teacherId()))));
+  }
+
+  public List<User> getAllUsers() {
+    return userService.getAllUsers();
+  }
+
+  public List<LessonDto> getAllLessons() {
+    return lessonService.getAllLessons().stream()
+        .map(lessonMapper::toLessonDto)
+        .toList();
+  }
+
   public List<TeacherDto> getAllTeachers() {
     return teacherService.getAllTeachers().stream()
         .map(teacherMapper::toTeacherDto)
         .toList();
-  }
-
-  public Form addForm(CreateFormDto createFormDto) {
-    return formService.save(
-        new Form(createFormDto.classname(),
-            teacherService.getTeacherById(UUID.fromString(createFormDto.teacherId()))));
   }
 
   public List<FormDto> getAllForms() {
@@ -128,15 +146,35 @@ public class AdminFacade {
         .toList();
   }
 
-  public StudentDto addStudentToClass(AddStudentToFormDto addStudentToFormDto) {
+  public void addStudentToClass(AddStudentToFormDto addStudentToFormDto) {
     Student student = studentService.getStudent(
         UUID.fromString(addStudentToFormDto.studentId()));
     student.setForm(formService.findById(
         UUID.fromString(addStudentToFormDto.classId())));
-    return studentMapper.toStudentDto(studentService.addStudent(student));
+    studentMapper.toStudentDto(studentService.addStudent(student));
   }
 
   public List<StudentDto> getStudentByClass(UUID classId) {
     return studentMapper.toStudentDtoList(studentService.getStudentByClass(classId));
+  }
+
+  public void saveScheduler(CreateScheduler createScheduler) {
+    schedulerService.saveScheduler(Schedules.builder()
+        .form(formService.findById(createScheduler.classId()))
+        .lesson(lessonService.getCurrentLesson(createScheduler.lessonId()))
+        .room(createScheduler.apartment())
+        .startTime(createScheduler.startTime())
+        .endTime(createScheduler.endTime())
+        .days(switch (createScheduler.dayOfWeek()) {
+          case "monday" -> Day.MONDAY;
+          case "tuesday" -> Day.TUESDAY;
+          case "wednesday" -> Day.WEDNESDAY;
+          case "thursday" -> Day.THURSDAY;
+          case "friday" -> Day.FRIDAY;
+          case "saturday" -> Day.SATURDAY;
+          default ->
+              throw new IllegalStateException("Unexpected value: " + createScheduler.dayOfWeek());
+        })
+        .build());
   }
 }

@@ -6,8 +6,9 @@ import java.util.UUID;
 public record CreateScheduler(
     UUID lessonId,
     UUID classId,
-    String apartament,
+    String apartment,
     LocalTime startTime,
-    LocalTime endTime) {
+    LocalTime endTime,
+    String dayOfWeek) {
 
 }

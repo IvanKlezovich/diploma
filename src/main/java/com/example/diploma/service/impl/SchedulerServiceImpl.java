@@ -1,6 +1,8 @@
 package com.example.diploma.service.impl;
 
+import com.example.diploma.dto.CreateScheduler;
 import com.example.diploma.dto.SchedulesDto;
+import com.example.diploma.entity.Schedules;
 import com.example.diploma.mapper.SchedulerMapper;
 import com.example.diploma.repository.SchedulerRepository;
 import com.example.diploma.service.SchedulerService;
@@ -26,9 +28,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         schedulerRepository.findByFormIdAndDays(id, day));
   }
 
-  public SchedulesDto saveScheduler(SchedulesDto schedulerDto) {
-    return schedulerMapper.toDto(
-        schedulerRepository.save(
-            schedulerMapper.toEntity(schedulerDto)));
+  public SchedulesDto saveScheduler(Schedules schedules) {
+    return schedulerMapper.toDto(schedulerRepository.save(schedules));
   }
 }

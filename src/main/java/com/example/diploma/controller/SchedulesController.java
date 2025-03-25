@@ -28,9 +28,4 @@ public class SchedulesController {
   public SchedulesDto getCurrentDay(UUID formId, String day) {
     return scheduleService.getSchedulerById(formId, day);
   }
-
-  @PostMapping("/add/dayOfWeek")
-  public SchedulesDto addDayOfWeek(@RequestBody SchedulesDto schedulesDto) {
-    return scheduleService.saveScheduler(schedulesDto);
-  }
 }

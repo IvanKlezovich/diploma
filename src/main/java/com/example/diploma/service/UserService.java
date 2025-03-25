@@ -9,7 +9,7 @@ public interface UserService {
 
   List<User> getAllUsers();
 
-  Boolean blockUser(UUID blockUserId);
+  void blockUser(UUID blockUserId);
 
   void changeRoleName(RoleNameDto roleNameDto);
 }

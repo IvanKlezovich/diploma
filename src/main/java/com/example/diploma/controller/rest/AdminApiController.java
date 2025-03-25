@@ -13,6 +13,7 @@ import com.example.diploma.dto.StudentDto;
 import com.example.diploma.dto.TeacherDto;
 import com.example.diploma.entity.User;
 import com.example.diploma.fasade.AdminFacade;
+import com.example.diploma.service.SchedulerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,7 @@ import java.util.UUID;
 public class AdminApiController {
 
   private final AdminFacade adminFacade;
+  private final SchedulerService schedulerService;
 
   @PostMapping("/users/add")
   public ResponseEntity<Void> addUser(CreateUserDto createUserDto) {
@@ -76,13 +78,15 @@ public class AdminApiController {
 
   @PostMapping("/scheduler/add")
   public ResponseEntity<Void> addScheduler(@RequestBody CreateScheduler createScheduler) {
+    adminFacade.saveScheduler(createScheduler);
     return ResponseEntity.ok().body(null);
   }
 
   @PostMapping("/classes/add-student")
-  public ResponseEntity<StudentDto> getStudent(
+  public ResponseEntity<Void> getStudent(
       @RequestBody AddStudentToFormDto addStudentToFormDto) {
-    return ResponseEntity.ok().body(adminFacade.addStudentToClass(addStudentToFormDto));
+    adminFacade.addStudentToClass(addStudentToFormDto);
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("class/{classId}/list")
