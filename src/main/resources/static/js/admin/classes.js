@@ -97,7 +97,7 @@ async function updateStudentTable(students) {
             <td>${index + 1}</td>
             <td>${student.name} ${student.secondName}</td>
             <td>
-              <button class="btn-delete" type="button">Удалить</button>
+              <button class="btn-delete-min" type="button">Удалить</button>
             </td>
           `;
     studentsList.appendChild(row);
