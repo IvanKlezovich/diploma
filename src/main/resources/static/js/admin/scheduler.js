@@ -115,3 +115,56 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const classSelector = document.getElementById('classSelect');
+  const loader = document.getElementById('loader');
+
+  // Функция для получения списка классов
+  async function fetchClasses() {
+    try {
+      const response = await fetch('/api/classes');
+      const classes = await response.json();
+
+      // Очистить существующие опции
+      classSelector.innerHTML = '<option value="all">Все классы</option>';
+
+      // Добавить новые опции
+      classes.forEach(cls => {
+        const option = document.createElement('option');
+        option.value = cls.id;
+        option.textContent = cls.name;
+        classSelector.appendChild(option);
+      });
+
+      // Спрятать лоадер после загрузки данных
+      loader.classList.add('hidden');
+
+    } catch (error) {
+      console.error('Ошибка при получении списка классов:', error);
+      loader.classList.add('hidden');
+    }
+  }
+
+  // Функция для фильтрации расписания
+  function filterSchedule(selectedClassId) {
+    const scheduleEntries = document.querySelectorAll('.class-schedule .diary-entry');
+
+    scheduleEntries.forEach(entry => {
+      const className = entry.closest('.class-schedule').querySelector('h2').textContent;
+      if (selectedClassId === 'all' || className === selectedClassId) {
+        entry.style.display = 'block';
+      } else {
+        entry.style.display = 'none';
+      }
+    });
+  }
+
+  // Загрузить список классов при загрузке страницы
+  fetchClasses();
+
+  // Обработчик изменения выбора класса
+  classSelector.addEventListener('change', function(e) {
+    filterSchedule(e.target.value);
+  });
+});
