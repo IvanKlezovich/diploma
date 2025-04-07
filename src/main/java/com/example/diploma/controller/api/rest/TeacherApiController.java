@@ -1,4 +1,4 @@
-package com.example.diploma.controller.rest;
+package com.example.diploma.controller.api.rest;
 
 import com.example.diploma.dto.CreateGradeDto;
 import com.example.diploma.fasade.TeacherFacade;

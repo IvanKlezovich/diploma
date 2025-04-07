@@ -103,6 +103,12 @@
       <div class="modal-body">
         <form action="#" id="gradeForm" method="post">
           <div class="form-group">
+            <label for="class">Класс:</label>
+            <select id="class" name="class">
+              <option value="">Выберете класс</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="student-grade">Ученик:</label>
             <select id="student-grade" name="student">
               <option value="">Выберите ученика</option>
@@ -118,12 +124,6 @@
             <label for="lesson">Урок:</label>
             <select id="lesson" name="lesson">
               <option value="">Выберете урок</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="class">Класс:</label>
-            <select id="class" name="class">
-              <option value="">Выберете класс</option>
             </select>
           </div>
           <div class="form-group">
@@ -158,16 +158,18 @@
   </button>
   <table>
     <tr>
+      <th>Класс</th>
       <th>Ученик</th>
+      <th>Предмет</th>
       <th>Оценка</th>
       <th>Дата</th>
-      <th>Предмет</th>
     </tr>
     <tr>
+      <td>7Б</td>
       <td>Иванов Иван</td>
+      <td>Математика</td>
       <td>5</td>
       <td>01.09.2024</td>
-      <td>Математика</td>
     </tr>
   </table>
   <footer>
@@ -175,50 +177,6 @@
   </footer>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const userForm = document.getElementById('gradeForm');
-    const popupModal = document.getElementById('addGrade');
-
-    if (!userForm || !popupModal) {
-      console.error('Не удалось найти один из необходимых элементов');
-      return;
-    }
-
-    userForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-
-      if (!formData.get('grade') || !formData.get('date')) {
-        alert('Заполните обязательные поля!');
-        return;
-      }
-
-      try {
-        const response = await fetch('/dairy-project/teacher/grades/add', {
-          method: 'POST',
-          body: formData
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-        }
-
-        alert('Отметка добавлена успешно!');
-        this.reset();
-
-        // Используем Bootstrap методы для работы с модальным окном
-        const modal = bootstrap.Modal.getInstance(popupModal);
-        modal.hide();
-
-      } catch (error) {
-        console.error('Ошибка:', error);
-        alert('Произошла ошибка при отправке данных: ' + error.message);
-      }
-    });
-  });
-</script>
+<script th:href="@{/js/teacher/grades.js}"></script>
 </body>
 </html>

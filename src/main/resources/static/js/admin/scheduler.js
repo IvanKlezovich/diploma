@@ -50,6 +50,82 @@ async function updateLessonsSelector(lessons) {
   })
 }
 
+async function updateSchedule(classId) {
+  try {
+    const response = await fetch(`/dairy-project/admin/scheduler/${classId}`);
+    if (!response.ok) {
+      throw new Error(`Ошибка при получении расписания: ${response.status}`);
+    }
+    const scheduleData = await response.json();
+
+    // Очищаем текущее расписание
+    const scheduleContainer = document.querySelector('.schedule-container');
+    scheduleContainer.innerHTML = '';
+
+    // Создаем новое расписание
+    scheduleData.days.forEach(day => {
+      const weekHalf = document.createElement('div');
+      weekHalf.className = 'week-half';
+
+      day.periods.forEach(period => {
+        const lessonElement = createLessonElement(period);
+        weekHalf.appendChild(lessonElement);
+      });
+
+      scheduleContainer.appendChild(weekHalf);
+    });
+  } catch (error) {
+    console.error('Ошибка при обновлении расписания:', error);
+    showAlert('Произошла ошибка при обновлении расписания');
+  }
+}
+
+async function createLessonElement(lesson) {
+  const lessonDiv = document.createElement('div');
+  lessonDiv.className = 'diary-entry';
+
+  lessonDiv.innerHTML = `
+    <div class="lesson-info"><h4>${lesson.subject}</h4></div>
+    <div class="lesson-details">
+      <p class="lesson-time">${lesson.startTime} - ${lesson.endTime}</p>
+      <p>Кабинет: ${lesson.room}</p>
+    </div>
+    <div class="actions">
+      <button class="btn-block btn-secondary">Редактировать</button>
+      <button class="btn-edit">Изменить</button>
+      <button class="btn-delete">Удалить</button>
+    </div>
+  `;
+
+  return lessonDiv;
+}
+
+document.getElementById('classSelect').addEventListener(
+    'change', async function (e) {
+      const selectedClass = e.target.value;
+      try {
+        if (selectedClass === 'all') {
+          document.querySelectorAll('.class-schedule').forEach(schedule => {
+            schedule.style.display = 'block';
+          });
+          return;
+        }
+
+        document.querySelectorAll('.class-schedule').forEach(schedule => {
+          schedule.style.display = 'none';
+        });
+
+        const selectedSchedule = document.querySelector(
+            `.class-schedule[data-class="${selectedClass}"]`);
+        if (selectedSchedule) {
+          selectedSchedule.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Ошибка при фильтрации расписания:', error);
+        showAlert('Произошла ошибка при фильтрации расписания');
+      }
+    });
+
 document.getElementById('addLessonToScheduler').addEventListener(
     'show.bs.modal', async function () {
       const classes = await fetchClasses();
@@ -60,58 +136,61 @@ document.getElementById('addLessonToScheduler').addEventListener(
       await updateClassesSelector(classes);
     })
 
-document.addEventListener('DOMContentLoaded', function () {
-  const addSchedulerForm = document.getElementById('addLessonToSchedulerForm');
-  const schedulerModal = document.getElementById('addLessonToScheduler');
+document.addEventListener(
+    'DOMContentLoaded', async function () {
+      const addSchedulerForm = document.getElementById(
+          'addLessonToSchedulerForm');
+      const schedulerModal = document.getElementById('addLessonToScheduler');
+      const selectedClass = document.getElementById('classSelect').value;
 
-  if (!addSchedulerForm || !schedulerModal) {
-    console.error('Не удалось найти один из необходимых элементов');
-    return;
-  }
-
-  addSchedulerForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    // if (!formData.get('class-name') || !formData.get('lesson-name')
-    //     || !formData.get('apartment') || !formData.get('lesson-time-begin')
-    //     || !formData.get('lesson-time-end')) {
-    //   alert('Заполните все обязательные поля!');
-    //   return;
-    // }
-
-    try {
-      const response = await fetch('/dairy-project/admin/scheduler/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          lessonId: formData.get('lesson'),
-          classId: formData.get('class'),
-          apartment: formData.get('apartment'),
-          startTime: formData.get('lesson-time-begin'),
-          endTime: formData.get('lesson-time-end'),
-          dayOfWeek: formData.get('days')
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-            errorData.message || `Ошибка сервера: ${response.status}`);
+      if (!addSchedulerForm || !schedulerModal) {
+        console.error('Не удалось найти один из необходимых элементов');
+        return;
       }
 
-      const modal = bootstrap.Modal.getInstance(schedulerModal);
-      modal.hide();
-      alert('Расписание успешно создано!');
-      location.reload();
+      addSchedulerForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    } catch (error) {
-      console.error('Ошибка при создании расписания:', error);
-      alert(`Произошла ошибка при создании расписания: ${error.message}`);
-      location.reload();
-    }
-  });
-});
+        const formData = new FormData(this);
+
+        // if (!formData.get('class-name') || !formData.get('lesson-name')
+        //     || !formData.get('apartment') || !formData.get('lesson-time-begin')
+        //     || !formData.get('lesson-time-end')) {
+        //   alert('Заполните все обязательные поля!');
+        //   return;
+        // }
+
+        try {
+          const response = await fetch('/dairy-project/admin/scheduler/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              lessonId: formData.get('lesson'),
+              classId: formData.get('class'),
+              apartment: formData.get('apartment'),
+              startTime: formData.get('lesson-time-begin'),
+              endTime: formData.get('lesson-time-end'),
+              dayOfWeek: formData.get('days')
+            })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message || `Ошибка сервера: ${response.status}`);
+          }
+
+          const modal = bootstrap.Modal.getInstance(schedulerModal);
+          modal.hide();
+          alert('Расписание успешно создано!');
+          location.reload();
+
+        } catch (error) {
+          console.error('Ошибка при создании расписания:', error);
+          alert(`Произошла ошибка при создании расписания: ${error.message}`);
+          location.reload();
+        }
+      });
+    });

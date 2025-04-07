@@ -8,8 +8,14 @@ import com.example.diploma.dto.CreateScheduler;
 import com.example.diploma.dto.CreateUserDto;
 import com.example.diploma.dto.FormDto;
 import com.example.diploma.dto.LessonDto;
+import com.example.diploma.dto.scheduler.LessonPeriod;
+import com.example.diploma.dto.scheduler.MiniFormDto;
 import com.example.diploma.dto.RoleNameDto;
+import com.example.diploma.dto.scheduler.SchedulerWeekDto;
+import com.example.diploma.dto.scheduler.SchedulesDto;
 import com.example.diploma.dto.StudentDto;
+import com.example.diploma.dto.scheduler.StudyDay;
+import com.example.diploma.dto.scheduler.StudyLesson;
 import com.example.diploma.dto.TeacherDto;
 import com.example.diploma.entity.Admin;
 import com.example.diploma.entity.Day;
@@ -57,38 +63,29 @@ public class AdminFacade {
   private final StudentMapper studentMapper;
 
   public void addPeople(CreateUserDto createUserDto) {
+    String password = "password";
     switch (createUserDto.role()) {
-      case "admin": {
+      case "admin" ->
         adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
             createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), "password", createUserDto.timeLimit()));
-        break;
-      }
-      case "parent": {
+            createUserDto.phone(), createUserDto.login(), password, createUserDto.timeLimit()));
+      case "parent" ->
         parentService.addParent(new Parent(new Name(createUserDto.firstname(),
             createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), "password",
+            createUserDto.phone(), createUserDto.login(), password,
             createUserDto.job(), createUserDto.description(), List.of(new Student()),
             createUserDto.timeLimit()));
-        break;
-      }
-      case "teacher": {
+      case "teacher"->
         teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
             createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), "password",
+            createUserDto.phone(), createUserDto.login(), password,
             createUserDto.timeLimit()));
-        break;
-      }
-      case "student": {
+      case "student" ->
         studentService.addStudent(new Student(new Name(createUserDto.firstname(),
             createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), "password",
+            createUserDto.phone(), createUserDto.login(), password,
             createUserDto.timeLimit()));
-        break;
-      }
-      default: {
-        break;
-      }
+      default -> System.out.println("Такой роли нет");
     }
   }
 
@@ -176,5 +173,57 @@ public class AdminFacade {
               throw new IllegalStateException("Unexpected value: " + createScheduler.dayOfWeek());
         })
         .build());
+  }
+
+  public SchedulerWeekDto getAllScheduler() {
+    List<Schedules> schedules = schedulerService.getAllSchedulers();
+    List<Form> forms = formService.findAll();
+    List<MiniFormDto> firstFragment = forms.stream()
+        .map(entity -> MiniFormDto.builder()
+            .name(entity.getName())
+            .formId(entity.getId())
+            .build())
+        .toList();
+
+    SchedulerWeekDto schedulerWeekDto = mapToSchedulerWeekDto(schedules);
+    schedulerWeekDto.setFormList(firstFragment);
+
+    return schedulerWeekDto;
+  }
+
+  private SchedulerWeekDto mapToSchedulerWeekDto(List<Schedules> schedules) {
+
+    return SchedulerWeekDto.builder()
+        .form(schedules.stream()
+            .map(schedule -> SchedulesDto.builder()
+                .form(mapFormToDto(schedule.getForm()))
+                .studyDays(mapToStudyDay(schedules, schedule.getForm()))
+                .build())
+            .toList())
+        .build();
+  }
+
+  private MiniFormDto mapFormToDto(Form form) {
+    return new MiniFormDto(form.getId(), form.getName());
+  }
+
+  private List<StudyDay> mapToStudyDay(List<Schedules> schedules, Form form) {
+    return schedules.stream()
+        .filter(e -> e.getForm().getName().equals(form.getName()))
+        .map(schedule -> StudyDay.builder()
+            .dayOfWeek(schedule.getDays())
+            .lesson(mapStudyLessonToDto(schedules, form, schedule.getDays()))
+            .build())
+        .toList();
+  }
+
+  private List<StudyLesson> mapStudyLessonToDto(List<Schedules> schedules, Form form, Day dayOfWeek) {
+    return schedules.stream()
+        .filter(e -> e.getForm().getName().equals(form.getName())&& e.getDays().equals(dayOfWeek))
+        .map(schedule -> StudyLesson.builder()
+            .lesson(schedule.getLesson())
+            .time(new LessonPeriod(schedule.getStartTime(), schedule.getEndTime()))
+            .build())
+        .toList();
   }
 }

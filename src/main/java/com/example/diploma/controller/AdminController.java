@@ -40,7 +40,7 @@ public class AdminController {
 
   @RequestMapping("/scheduler")
   public String scheduler(Model model) {
-    //model.addAttribute("forms", adminFacade.getAllForms());
+    model.addAttribute("forms", adminFacade.getAllScheduler());
     return "admin/scheduler";
   }
 }

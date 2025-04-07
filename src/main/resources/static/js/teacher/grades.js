@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const userForm = document.getElementById('lessonForm');
-  const popupModal = document.getElementById('addLesson');
+  const userForm = document.getElementById('gradeForm');
+  const popupModal = document.getElementById('addGrade');
 
   if (!userForm || !popupModal) {
     console.error('Не удалось найти один из необходимых элементов');
@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const formData = new FormData(this);
 
-    if (!formData.get('lessonName') || !formData.get('lessonDescription')) {
+    if (!formData.get('grade') || !formData.get('date')) {
       alert('Заполните обязательные поля!');
       return;
     }
 
     try {
-      const response = await fetch('/dairy-project/admin/lessons/add', {
+      const response = await fetch('/dairy-project/teacher/grades/add', {
         method: 'POST',
         body: formData
       });
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             errorData.message || `Ошибка сервера: ${response.status}`);
       }
 
-      alert('Предмет добавлен успешно!');
+      alert('Отметка добавлена успешно!');
       this.reset();
 
       // Используем Bootstrap методы для работы с модальным окном
@@ -40,6 +40,5 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error('Ошибка:', error);
       alert('Произошла ошибка при отправке данных: ' + error.message);
     }
-    location.reload();
   });
 });

@@ -1,7 +1,6 @@
 package com.example.diploma.mapper;
 
-import com.example.diploma.dto.CreateScheduler;
-import com.example.diploma.dto.SchedulesDto;
+import com.example.diploma.dto.scheduler.SchedulesDto;
 import com.example.diploma.entity.Schedules;
 import java.util.List;
 import org.mapstruct.Mapper;

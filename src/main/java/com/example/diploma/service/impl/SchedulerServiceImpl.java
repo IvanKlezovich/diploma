@@ -1,7 +1,6 @@
 package com.example.diploma.service.impl;
 
-import com.example.diploma.dto.CreateScheduler;
-import com.example.diploma.dto.SchedulesDto;
+import com.example.diploma.dto.scheduler.SchedulesDto;
 import com.example.diploma.entity.Schedules;
 import com.example.diploma.mapper.SchedulerMapper;
 import com.example.diploma.repository.SchedulerRepository;
@@ -18,7 +17,11 @@ public class SchedulerServiceImpl implements SchedulerService {
   private final SchedulerRepository schedulerRepository;
   private final SchedulerMapper schedulerMapper;
 
-  public List<SchedulesDto> getAllSchedulers(UUID formId) {
+  public List<Schedules> getAllSchedulers() {
+    return schedulerRepository.findAll();
+  }
+
+  public List<SchedulesDto> getAllSchedulersByFormId(UUID formId) {
     return schedulerMapper.toDto(
         schedulerRepository.findAllByFormId(formId));
   }
