@@ -8,89 +8,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    nav {
-      background-color: #2196F3;
-      padding: 15px;
-      border-radius: 8px;
-    }
-
-    nav ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      margin: 0 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      border-radius: 8px;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-      border-radius: 8px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    .btn-block {
-      width: 100%;
-      margin-top: 5px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    header {
-      background-color: #f0f0f0;
-      padding: 20px;
-      text-align: center;
-      border-radius: 8px;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/homework.css}" type="text/css">
 </head>
 <body>
 <div class="modal fade" id="addModal" role="dialog" tabindex="-1">
@@ -104,11 +22,13 @@
         <form action="#" id="homeworkForm" method="post">
           <div class="form-group">
             <label for="hw-name">Предмет:</label>
-            <input id="hw-name" name="hw-name" required type="text">
+            <select id="hw-name" name="hw-name" required type="text">
+            </select>
           </div>
           <div class="form-group">
             <label for="hw-class">Класс:</label>
-            <input id="hw-class" name="hw-class" required type="text">
+            <select id="hw-class" name="hw-class" required type="text">
+            </select>
           </div>
           <div class="form-group">
             <label for="hw-description">Задание:</label>
@@ -119,7 +39,7 @@
             <input id="hw-url" name="hw-url" required type="url">
           </div>
           <div class="form-group">
-            <label for="hw-deadline">Срок сдачи:</label>
+            <label for="hw-deadline">Дата:</label>
             <input id="hw-deadline" name="hw-deadline" required type="datetime-local">
           </div>
           <button class="btn btn-primary" type="submit">Добавить задание</button>
@@ -140,7 +60,6 @@
       <li><a th:href="@{/teacher/materials}">Учебные материалы</a></li>
       <li><a th:href="@{/teacher/events}">События</a></li>
       <li><a th:href="@{/teacher/notes}">Замечания</a></li>
-      <li><a th:href="@{/teacher/homework}">Домашние задания</a></li>
     </ul>
   </nav>
   <h2>Домашние задания</h2>
@@ -154,7 +73,7 @@
         <th>Класс</th>
         <th>Задание</th>
         <th>Ссылка</th>
-        <th>Срок сдачи</th>
+        <th>Дата</th>
         <th>Действие</th>
       </tr>
       <tr>
@@ -174,80 +93,6 @@
   </footer>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const userForm = document.getElementById('homeworkForm');
-    const popupModal = document.getElementById('addModal');
-
-    if (!userForm || !popupModal) {
-      console.error('Не удалось найти один из необходимых элементов');
-      return;
-    }
-
-    userForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-
-      if (!formData.get('login') || !formData.get('email') || !formData.get('firstname')) {
-        alert('Заполните обязательные поля!');
-        return;
-      }
-
-      try {
-        const response = await fetch('/dairy-project/teacher/homework/add', {
-          method: 'POST',
-          body: formData
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
-        }
-
-        alert('Пользователь добавлен успешно!');
-        this.reset();
-
-        // Используем Bootstrap методы для работы с модальным окном
-        const modal = bootstrap.Modal.getInstance(popupModal);
-        modal.hide();
-
-      } catch (error) {
-        console.error('Ошибка:', error);
-        alert('Произошла ошибка при отправке данных: ' + error.message);
-      }
-    });
-  });
-  document.querySelectorAll('.btn-block.btn-secondary').forEach(button => {
-    button.addEventListener('click', function (e) {
-      e.preventDefault();
-
-      const userId = this.closest('tr').querySelector('td:first-child').textContent;
-
-      fetch('/dairy-project/admin/users/block', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: {userId: userId}
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          const statusCell = this.closest('tr').querySelector('td:nth-child(4)');
-          statusCell.textContent = 'Заблокирован';
-          this.textContent = 'Разблокировать';
-          this.classList.remove('btn-secondary');
-          this.classList.add('btn-danger');
-        } else {
-          alert('Ошибка при блокировке пользователя: ' + data.message);
-        }
-      })
-      .catch(error => {
-        alert('Произошла ошибка при отправке данных: ' + error.message);
-      });
-    });
-  });
-</script>
+<script th:src="@{/js/teacher/homework.js}"></script>
 </body>
 </html>

@@ -2,6 +2,25 @@ document.addEventListener('DOMContentLoaded', function () {
   const userForm = document.getElementById('gradeForm');
   const popupModal = document.getElementById('addGrade');
 
+  // Получаем элемент даты
+  const dateInput = document.getElementById('date');
+
+  // Устанавливаем текущую дату при загрузке
+  function setDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    dateInput.value = `${year}-${month}-${day}`;
+  }
+
+  // Устанавливаем текущую дату при первом открытии
+  setDate();
+
+  // Обновляем дату при каждом открытии модального окна
+  const modal = document.getElementById('addGrade');
+  modal.addEventListener('show.bs.modal', setDate);
+
   if (!userForm || !popupModal) {
     console.error('Не удалось найти один из необходимых элементов');
     return;
@@ -11,11 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
 
     const formData = new FormData(this);
-
-    if (!formData.get('grade') || !formData.get('date')) {
-      alert('Заполните обязательные поля!');
-      return;
-    }
 
     try {
       const response = await fetch('/dairy-project/teacher/grades/add', {
