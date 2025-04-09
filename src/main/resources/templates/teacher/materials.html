@@ -8,94 +8,12 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    nav {
-      background-color: #2196F3;
-      padding: 15px;
-      border-radius: 8px;
-    }
-
-    nav ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      margin: 0 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      border-radius: 8px;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-      border-radius: 8px;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    .btn-block {
-      width: 100%;
-      margin-top: 5px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    header {
-      background-color: #f0f0f0;
-      padding: 20px;
-      text-align: center;
-      border-radius: 8px;
-    }
-  </style>
+  <link th:href="@{/css/teacher/materials.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="modal fade" id="addMaterials" role="dialog" tabindex="-1">
   <div class="modal-dialog">
-    <div clas="modal-content">
+    <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Добавить материал</h5>
         <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
@@ -118,21 +36,47 @@
     </div>
   </div>
 </div>
-<main>
-  <header>
-    <h1>Панель учителя</h1>
-    <p>Учитель: Петрова Елена Ивановна | Предмет: Математика</p>
-  </header>
+<header>
+  <h1>Панель учителя</h1>
+  <p>Учитель: Петрова Елена Ивановна | Предмет: Математика</p>
+</header>
+<div class="card-container">
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Домашняя страница</h3>
+      <a th:href="@{/teacher/}" class="card-link">Перейти на домашнюю страницу</a>
+    </div>
+  </div>
 
-  <nav>
-    <ul>
-      <li><a th:href="@{/teacher/}">Домашняя страница</a></li>
-      <li><a th:href="@{/teacher/grades}">Оценки</a></li>
-      <li><a th:href="@{/teacher/events}">События</a></li>
-      <li><a th:href="@{/teacher/notes}">Замечания</a></li>
-      <li><a th:href="@{/teacher/homework}">Домашние задания</a></li>
-    </ul>
-  </nav>
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Оценки</h3>
+      <a th:href="@{/teacher/grades}" class="card-link">Перейти к оценкам</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">События</h3>
+      <a th:href="@{/teacher/events}" class="card-link">Перейти к событиям</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Замечания</h3>
+      <a th:href="@{/teacher/notes}" class="card-link">Перейти к замечаниям</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Домашние задания</h3>
+      <a th:href="@{/teacher/homework}" class="card-link">Перейти к заданиям</a>
+    </div>
+  </div>
+</div>
+<main>
   <h2>Учебные материалы</h2>
   <button class="btn btn-primary" data-bs-target="#addMaterials" data-bs-toggle="modal">
     Добавить материалы
@@ -150,7 +94,7 @@
     </tr>
   </table>
   <footer>
-    <p>&copy; 2025 Панель учителя | Разработано для учителей</p>
+    <p>&copy; 2025 Панель учителя</p>
   </footer>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

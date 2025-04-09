@@ -1,0 +1,21 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+th, td {
+    /*border: 1px solid #ddd;*/
+    padding: 8px;
+    text-align: left;
+    border-radius: 8px;
+    width: auto;
+}
+
+th {
+    background-color: #f2f2f2;
+}

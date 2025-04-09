@@ -1,58 +1,71 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const userForm = document.getElementById('gradeForm');
-  const popupModal = document.getElementById('addGrade');
+let activeSortColumn = null;
 
-  // Получаем элемент даты
-  const dateInput = document.getElementById('date');
+document.addEventListener('DOMContentLoaded', function() {
+  const sortButtons = document.querySelectorAll('.sort-btn');
 
-  // Устанавливаем текущую дату при загрузке
-  function setDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    dateInput.value = `${year}-${month}-${day}`;
-  }
+  sortButtons.forEach(button => {
+    let sortState = 0;
 
-  // Устанавливаем текущую дату при первом открытии
-  setDate();
-
-  // Обновляем дату при каждом открытии модального окна
-  const modal = document.getElementById('addGrade');
-  modal.addEventListener('show.bs.modal', setDate);
-
-  if (!userForm || !popupModal) {
-    console.error('Не удалось найти один из необходимых элементов');
-    return;
-  }
-
-  userForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    try {
-      const response = await fetch('/dairy-project/teacher/grades/add', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-            errorData.message || `Ошибка сервера: ${response.status}`);
+    button.addEventListener('click', function() {
+      // Если нажата другая колонка, сбрасываем предыдущую сортировку
+      if (activeSortColumn !== null && activeSortColumn !== parseInt(this.dataset.column)) {
+        document.querySelector(`.sort-btn[data-column="${activeSortColumn}"]`).textContent = '↑↓';
+        activeSortColumn = null;
       }
 
-      alert('Отметка добавлена успешно!');
-      this.reset();
+      // Если сортировка уже включена для этой колонки, просто меняем направление
+      if (activeSortColumn === parseInt(this.dataset.column)) {
+        sortState = (sortState + 1) % 3;
 
-      // Используем Bootstrap методы для работы с модальным окном
-      const modal = bootstrap.Modal.getInstance(popupModal);
-      modal.hide();
+        if (sortState === 0) {
+          activeSortColumn = null;
+        }
+      } else {
+        // Начинаем новую сортировку
+        sortState = 1;
+        activeSortColumn = parseInt(this.dataset.column);
+      }
 
-    } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке данных: ' + error.message);
-    }
+      // Обновляем внешний вид кнопки
+      switch(sortState) {
+        case 0:
+          this.textContent = '↑↓';
+          break;
+        case 1:
+          this.textContent = '↑';
+          break;
+        case 2:
+          this.textContent = '↓';
+          break;
+      }
+
+      // Если сортировка включена, выполняем сортировку
+      if (sortState > 0) {
+        const column = parseInt(this.dataset.column);
+        const order = sortState === 1 ? 'asc' : 'desc';
+        sortTable(column, order);
+      }
+    });
   });
 });
+
+function sortTable(column, order) {
+  const table = document.querySelector('table');
+  const tbody = table.querySelector('tbody');
+
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+
+  rows.sort((a, b) => {
+    const aValue = a.cells[column].textContent;
+    const bValue = b.cells[column].textContent;
+
+    if (order === 'asc') {
+      return aValue.localeCompare(bValue);
+    } else {
+      return bValue.localeCompare(aValue);
+    }
+  });
+
+  tbody.innerHTML = '';
+  rows.forEach(row => tbody.appendChild(row));
+}
