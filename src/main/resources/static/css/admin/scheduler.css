@@ -1,0 +1,97 @@
+@import "../shared/buttons.css";
+/*@import "../shared/tables.css";*/
+@import "../shared/modalForm.css";
+@import "../shared/menu.css";
+@import "../shared/peplePresentation.css";
+@import "../shared/scheduleBasicStyle.css";
+/*@import "../shared/selector.css";*/
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.controls-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.class-selector {
+  flex: 1;
+  min-width: 200px;
+}
+
+.class-selector select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.class-schedule {
+  margin-top: 20px;
+}
+
+.class-schedule h2 {
+  margin-bottom: 20px;
+  color: #495057;
+}
+
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .class-selector select {
+    padding: 6px;
+    font-size: 14px;
+  }
+
+  .schedule-container {
+    grid-template-columns: 1fr;
+  }
+
+  .week-half {
+    padding: 15px;
+  }
+
+  .lesson-date {
+    font-size: 20px;
+  }
+
+  .diary-entry {
+    padding: 15px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+}
+
+@media (max-width: 576px) {
+  .lesson-date {
+    font-size: 18px;
+  }
+
+  .lesson-details {
+    font-size: 12px;
+  }
+
+  .actions button {
+    font-size: 12px;
+    padding: 6px;
+  }
+}

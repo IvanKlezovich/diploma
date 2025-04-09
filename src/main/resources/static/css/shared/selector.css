@@ -1,0 +1,25 @@
+.class-selector {
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.class-selector select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .class-selector {
+    padding: 10px;
+  }
+
+  .class-selector select {
+    padding: 6px;
+    font-size: 14px;
+  }
+}

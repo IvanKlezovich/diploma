@@ -1,7 +1,9 @@
 table {
     width: 100%;
     border-collapse: collapse;
-    display: block;
+    margin-top: 20px;
+    text-align: left;
+    border-radius: 8px;
     position: relative;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -13,7 +15,6 @@ th, td {
     padding: 8px;
     text-align: left;
     border-radius: 8px;
-    width: auto;
 }
 
 th {
