@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const formData = new FormData(this);
 
-    if (!formData.get('login') || !formData.get('email') || !formData.get('firstname')) {
+    if (!formData.get('login') || !formData.get('email') || !formData.get(
+        'firstname')) {
       alert('Заполните обязательные поля!');
       return;
     }
@@ -25,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
+        throw new Error(
+            errorData.message || `Ошибка сервера: ${response.status}`);
       }
 
       alert('Пользователь добавлен успешно!');
@@ -45,7 +47,8 @@ document.querySelectorAll('.btn-block.btn-secondary').forEach(button => {
   button.addEventListener('click', function (e) {
     e.preventDefault();
 
-    const userId = this.closest('tr').querySelector('td:first-child').textContent;
+    const userId = this.closest('tr').querySelector(
+        'td:first-child').textContent;
 
     fetch('/dairy-project/admin/users/block', {
       method: 'POST',

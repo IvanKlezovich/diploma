@@ -8,15 +8,15 @@ import com.example.diploma.dto.CreateScheduler;
 import com.example.diploma.dto.CreateUserDto;
 import com.example.diploma.dto.FormDto;
 import com.example.diploma.dto.LessonDto;
+import com.example.diploma.dto.RoleNameDto;
+import com.example.diploma.dto.StudentDto;
+import com.example.diploma.dto.TeacherDto;
 import com.example.diploma.dto.scheduler.LessonPeriod;
 import com.example.diploma.dto.scheduler.MiniFormDto;
-import com.example.diploma.dto.RoleNameDto;
 import com.example.diploma.dto.scheduler.SchedulerWeekDto;
 import com.example.diploma.dto.scheduler.SchedulesDto;
-import com.example.diploma.dto.StudentDto;
 import com.example.diploma.dto.scheduler.StudyDay;
 import com.example.diploma.dto.scheduler.StudyLesson;
-import com.example.diploma.dto.TeacherDto;
 import com.example.diploma.entity.Admin;
 import com.example.diploma.entity.Day;
 import com.example.diploma.entity.Form;
@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
@@ -65,26 +66,22 @@ public class AdminFacade {
   public void addPeople(CreateUserDto createUserDto) {
     String password = "password";
     switch (createUserDto.role()) {
-      case "admin" ->
-        adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
-            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), password, createUserDto.timeLimit()));
-      case "parent" ->
-        parentService.addParent(new Parent(new Name(createUserDto.firstname(),
-            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), password,
-            createUserDto.job(), createUserDto.description(), List.of(new Student()),
-            createUserDto.timeLimit()));
-      case "teacher"->
-        teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
-            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), password,
-            createUserDto.timeLimit()));
-      case "student" ->
-        studentService.addStudent(new Student(new Name(createUserDto.firstname(),
-            createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-            createUserDto.phone(), createUserDto.login(), password,
-            createUserDto.timeLimit()));
+      case "admin" -> adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
+          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+          createUserDto.phone(), createUserDto.login(), password, createUserDto.timeLimit()));
+      case "parent" -> parentService.addParent(new Parent(new Name(createUserDto.firstname(),
+          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+          createUserDto.phone(), createUserDto.login(), password,
+          createUserDto.job(), createUserDto.description(), List.of(new Student()),
+          createUserDto.timeLimit()));
+      case "teacher" -> teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
+          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+          createUserDto.phone(), createUserDto.login(), password,
+          createUserDto.timeLimit()));
+      case "student" -> studentService.addStudent(new Student(new Name(createUserDto.firstname(),
+          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+          createUserDto.phone(), createUserDto.login(), password,
+          createUserDto.timeLimit()));
       default -> System.out.println("Такой роли нет");
     }
   }
@@ -217,13 +214,17 @@ public class AdminFacade {
         .toList();
   }
 
-  private List<StudyLesson> mapStudyLessonToDto(List<Schedules> schedules, Form form, Day dayOfWeek) {
+  private List<StudyLesson> mapStudyLessonToDto(List<Schedules> schedules, Form form,
+      Day dayOfWeek) {
     return schedules.stream()
-        .filter(e -> e.getForm().getName().equals(form.getName())&& e.getDays().equals(dayOfWeek))
+        .filter(e -> e.getForm().getName().equals(form.getName()) && e.getDays().equals(dayOfWeek))
         .map(schedule -> StudyLesson.builder()
             .lesson(schedule.getLesson())
             .time(new LessonPeriod(schedule.getStartTime(), schedule.getEndTime()))
             .build())
         .toList();
+  }
+
+  public void saveSchedulerByFile(MultipartFile file, String className, String fileType) {
   }
 }

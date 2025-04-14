@@ -1,0 +1,51 @@
+@import "../shared/tables.css";
+@import "../shared/peplePresentation.css";
+@import "../shared/menu.css";
+@import "../shared/mainDiv.css";
+
+.columns-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.column {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.today-section, .tomorrow-section {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .columns-container {
+    flex-direction: column;
+  }
+
+  .column {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Медиа-запрос для мобильных устройств (576px) */
+@media screen and (max-width: 576px) {
+  .columns-container {
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+
+  .column {
+    padding: 0.75rem;
+  }
+
+  .schedule {
+    font-size: 0.9em;
+  }
+
+  .grades-table {
+    font-size: 0.9em;
+  }
+}

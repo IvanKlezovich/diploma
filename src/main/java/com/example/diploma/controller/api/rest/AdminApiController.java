@@ -13,10 +13,10 @@ import com.example.diploma.dto.StudentDto;
 import com.example.diploma.dto.TeacherDto;
 import com.example.diploma.entity.User;
 import com.example.diploma.fasade.AdminFacade;
-import com.example.diploma.service.SchedulerService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/admin")
@@ -33,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminApiController {
 
   private final AdminFacade adminFacade;
-  private final SchedulerService schedulerService;
 
   @PostMapping("/users/add")
   public ResponseEntity<Void> addUser(CreateUserDto createUserDto) {
@@ -79,6 +80,18 @@ public class AdminApiController {
   public ResponseEntity<Void> addScheduler(@RequestBody CreateScheduler createScheduler) {
     adminFacade.saveScheduler(createScheduler);
     return ResponseEntity.ok().body(null);
+  }
+
+  @PostMapping(value = "/scheduler/add/file",
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Void> addSchedulerByFile(
+      @RequestParam("scheduleFile") MultipartFile file,
+      @RequestParam("class") String className,
+      @RequestParam("fileType") String fileType) {
+
+    adminFacade.saveSchedulerByFile(file, className, fileType);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/classes/add-student")

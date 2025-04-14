@@ -8,7 +8,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         rel="stylesheet">
-  <link th:href="@{/css/teacher/index.css}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" th:href="@{/css/teacher/index.css}" type="text/css">
 </head>
 <body>
 <main>
@@ -21,40 +21,38 @@
     <div class="card">
       <div class="card-content">
         <h3 class="card-title">Оценки</h3>
-        <a th:href="@{/teacher/grades}" class="card-link">Перейти к оценкам</a>
+        <a class="card-link" th:href="@{/teacher/grades}">Перейти к оценкам</a>
       </div>
     </div>
 
     <div class="card">
       <div class="card-content">
         <h3 class="card-title">Учебные материалы</h3>
-        <a th:href="@{/teacher/materials}" class="card-link">Перейти к материалам</a>
+        <a class="card-link" th:href="@{/teacher/materials}">Перейти к материалам</a>
       </div>
     </div>
 
     <div class="card">
       <div class="card-content">
         <h3 class="card-title">События</h3>
-        <a th:href="@{/teacher/events}" class="card-link">Перейти к событиям</a>
+        <a class="card-link" th:href="@{/teacher/events}">Перейти к событиям</a>
       </div>
     </div>
 
     <div class="card">
       <div class="card-content">
         <h3 class="card-title">Замечания</h3>
-        <a th:href="@{/teacher/notes}" class="card-link">Перейти к замечаниям</a>
+        <a class="card-link" th:href="@{/teacher/notes}">Перейти к замечаниям</a>
       </div>
     </div>
 
     <div class="card">
       <div class="card-content">
         <h3 class="card-title">Домашние задания</h3>
-        <a th:href="@{/teacher/homework}" class="card-link">Перейти к заданиям</a>
+        <a class="card-link" th:href="@{/teacher/homework}">Перейти к заданиям</a>
       </div>
     </div>
   </div>
-
-
 
   <div class="schedule-container d-flex justify-content-around">
     <div class="week-half">

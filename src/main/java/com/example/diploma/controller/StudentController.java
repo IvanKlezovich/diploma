@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class StudentController {
 
-  @RequestMapping("/homework")
-  public String homework() {
-    return "student/homework";
-  }
-
   @RequestMapping("/schedules")
   public String notes() {
     return "student/schedules";

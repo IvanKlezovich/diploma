@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель родителя</title>
-  <link rel="stylesheet" th:href="@{/css/baseStyle.css}">
+  <link rel="stylesheet" th:href="@{/css/parent/events.css}">
 </head>
 <body>
 <header>
@@ -19,19 +19,44 @@
   </div>
 </header>
 
-<nav>
-  <ul>
-    <li><a onclick="showSection('grades')" th:href="@{/parent/grades}">Оценки</a></li>
-    <li><a onclick="showSection('materials')" th:href="@{/parent/materials}">Учебные материалы</a>
-    </li>
-    <li><a onclick="showSection('events')" th:href="@{/parent/events}">События</a></li>
-    <li><a onclick="showSection('notes')" th:href="@{/parent/notes}">Замечания</a></li>
-    <li><a onclick="showSection('homework')" th:href="@{/parent/homework}">Домашние задания</a></li>
-    <li><a onclick="showSection('feedback')" th:href="@{/parent/feedback}">Обратная связь</a></li>
-  </ul>
-</nav>
+<div class="card-container">
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Домашняя страница</h3>
+      <a class="card-link" th:href="@{/parent/}">Перейти на домашнюю страницу</a>
+    </div>
+  </div>
 
-<section id="events">
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Отметки</h3>
+      <a class="card-link" th:href="@{/parent/grades}">Посмотреть отметки</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Учебные материалы</h3>
+      <a class="card-link" th:href="@{/parent/materials}">Посмотреть материалы</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Замечания</h3>
+      <a class="card-link" th:href="@{/parent/notes}">Посмотреть замечания</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Домашняя работа</h3>
+      <a class="card-link" th:href="@{/parent/homework}">Посмотреть домашние задания</a>
+    </div>
+  </div>
+</div>
+
+<main>
   <h2>События</h2>
   <table>
     <tr>
@@ -50,6 +75,6 @@
       <td>Коллоквиум</td>
     </tr>
   </table>
-</section>
+</main>
 </body>
 </html>

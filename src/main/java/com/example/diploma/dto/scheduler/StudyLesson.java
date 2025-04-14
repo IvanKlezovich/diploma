@@ -4,7 +4,8 @@ import com.example.diploma.entity.Lesson;
 import lombok.Builder;
 
 @Builder
-public class StudyLesson{
+public class StudyLesson {
+
   private Lesson lesson;
   private LessonPeriod time;
 }

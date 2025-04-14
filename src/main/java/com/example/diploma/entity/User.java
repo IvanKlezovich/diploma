@@ -40,7 +40,7 @@ public class User implements Serializable {
 
   private String phone;
 
-  private String login;
+  private String username;
 
   private String password;
 
@@ -56,12 +56,12 @@ public class User implements Serializable {
   private Boolean isBlocked;
 
   public User(Name name, String email,
-      String phone, String login, String password,
+      String phone, String username, String password,
       LocalDate timeLimit) {
     this.name = name;
     this.email = email;
     this.phone = phone;
-    this.login = login;
+    this.username = username;
     this.password = password;
     this.timeLimit = timeLimit;
     isBlocked = false;

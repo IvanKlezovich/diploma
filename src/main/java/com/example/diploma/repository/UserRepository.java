@@ -1,6 +1,7 @@
 package com.example.diploma.repository;
 
 import com.example.diploma.entity.User;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
           + "where id = :userId")
   void changeRole(@Param("userId") UUID userId,
       @Param("name") String name);
+
+  Optional<User> findByUsername(String username);
 }

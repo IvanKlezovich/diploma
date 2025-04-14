@@ -1,15 +1,17 @@
 let activeSortColumn = null;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const sortButtons = document.querySelectorAll('.sort-btn');
 
   sortButtons.forEach(button => {
     let sortState = 0;
 
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       // Если нажата другая колонка, сбрасываем предыдущую сортировку
-      if (activeSortColumn !== null && activeSortColumn !== parseInt(this.dataset.column)) {
-        document.querySelector(`.sort-btn[data-column="${activeSortColumn}"]`).textContent = '↑↓';
+      if (activeSortColumn !== null && activeSortColumn !== parseInt(
+          this.dataset.column)) {
+        document.querySelector(
+            `.sort-btn[data-column="${activeSortColumn}"]`).textContent = '↑↓';
         activeSortColumn = null;
       }
 
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Обновляем внешний вид кнопки
-      switch(sortState) {
+      switch (sortState) {
         case 0:
           this.textContent = '↑↓';
           break;

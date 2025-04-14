@@ -3,15 +3,4 @@
 @import "../shared/modalForm.css";
 @import "../shared/menu.css";
 @import "../shared/peplePresentation.css";
-
-main {
-  max-width: 1200px;
-  min-width: 750px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  opacity: 1;
-  visibility: visible;
-}
+@import "../shared/mainDiv.css";

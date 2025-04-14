@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель учащегося</title>
-  <link rel="stylesheet" th:href="@{/css/baseStyle.css}">
+  <link rel="stylesheet" th:href="@{/css/student/mark.css}">
 </head>
 <body>
 <header>
@@ -12,31 +12,38 @@
   <p>Класс: 7А | Ученик: Иванов Иван</p>
 </header>
 
-<nav>
-  <ul>
-    <li><a th:href="@{/student/schedules}">Расписание</a></li>
-    <li><a th:href="@{/student/mark}">Оценки</a></li>
-    <li><a th:href="@{/student/homework}">Домашнее задание</a></li>
-  </ul>
-</nav>
+<div class="card-container">
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Домашняя страница</h3>
+      <a class="card-link" th:href="@{/student/}">Перейти на домашнюю страницу</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Расписание</h3>
+      <a class="card-link" th:href="@{/student/schedules}">Посмотреть расписание</a>
+    </div>
+  </div>
+
+</div>
 
 <main>
-  <section id="otsenki">
-    <h2>Оценки</h2>
-    <table class="grades-table">
-      <tr>
-        <th>Предмет</th>
-        <th>Оценка</th>
-        <th>Дата</th>
-      </tr>
-      <tr>
-        <td>Математика</td>
-        <td>5</td>
-        <td>01.09.2024</td>
-      </tr>
-      <!-- Добавьте другие оценки -->
-    </table>
-  </section>
+  <h2>Оценки</h2>
+  <table class="grades-table">
+    <tr>
+      <th>Предмет</th>
+      <th>Оценка</th>
+      <th>Дата</th>
+    </tr>
+    <tr>
+      <td>Математика</td>
+      <td>5</td>
+      <td>01.09.2024</td>
+    </tr>
+    <!-- Добавьте другие оценки -->
+  </table>
 </main>
 
 <footer>

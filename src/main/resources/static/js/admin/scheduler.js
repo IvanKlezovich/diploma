@@ -38,6 +38,18 @@ async function updateClassesSelector(forms) {
   })
 }
 
+async function updateClassesSelectorFromFile(forms) {
+  console.log(forms)
+  const classesSelect = document.getElementById('class-name-file');
+  classesSelect.innerHTML = '<option value="">Выберите класс</option><option value="all">Все классы</option>';
+  forms.forEach(form => {
+    const option = document.createElement('option');
+    option.value = form.classId;
+    option.textContent = `${form.classname}`;
+    classesSelect.appendChild(option);
+  })
+}
+
 async function updateLessonsSelector(lessons) {
   console.log(lessons);
   const lessonsSelect = document.getElementById('selector-lesson');
@@ -136,17 +148,62 @@ document.getElementById('addLessonToScheduler').addEventListener(
       await updateClassesSelector(classes);
     })
 
+document.getElementById('addLessonToSchedulerByFile').addEventListener(
+    'show.bs.modal', async function () {
+      const classes = await fetchClasses();
+
+      await updateClassesSelectorFromFile(classes);
+    }
+)
+
 document.addEventListener(
     'DOMContentLoaded', async function () {
       const addSchedulerForm = document.getElementById(
           'addLessonToSchedulerForm');
-      const schedulerModal = document.getElementById('addLessonToScheduler');
+      const addSchedulerFormFromFile = document.getElementById(
+          'addLessonToSchedulerByFileForm');
+      const schedulerModal = document.getElementById(
+          'addLessonToScheduler');
+      const addSchedulerModalFromFile = document.getElementById(
+          'addLessonToSchedulerByFile');
       const selectedClass = document.getElementById('classSelect').value;
 
       if (!addSchedulerForm || !schedulerModal) {
         console.error('Не удалось найти один из необходимых элементов');
         return;
       }
+      addSchedulerFormFromFile.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const progressBar = document.getElementById('uploadProgress');
+        const xhr = new XMLHttpRequest();
+
+        xhr.upload.addEventListener('progress', function (e) {
+          if (e.lengthComputable) {
+            const percentComplete = Math.round((e.loaded / e.total) * 100);
+            progressBar.style.width = percentComplete + '%';
+            progressBar.setAttribute('aria-valuenow', percentComplete);
+          }
+        });
+
+        xhr.addEventListener('load', function () {
+          if (xhr.status === 200) {
+            alert('Расписание успешно загружено!');
+            progressBar.style.width = '0%';
+          } else {
+            alert('Ошибка при загрузке расписания: ' + xhr.statusText);
+          }
+        });
+
+        xhr.open('POST', '/dairy-project/admin/scheduler/add/file', true);
+        xhr.send(formData);
+
+        const modal = bootstrap.Modal.getInstance(addSchedulerModalFromFile);
+        modal.hide();
+        alert('Расписание успешно создано!');
+        location.reload();
+      });
 
       addSchedulerForm.addEventListener('submit', async function (e) {
         e.preventDefault();

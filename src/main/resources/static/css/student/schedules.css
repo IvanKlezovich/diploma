@@ -1,0 +1,14 @@
+@import "../shared/tables.css";
+@import "../shared/peplePresentation.css";
+@import "../shared/menu.css";
+@import "../shared/mainDiv.css";
+@import "../shared/scheduleBasicStyle.css";
+
+.lesson-homework {
+  color: #2196F3;
+  font-size: 18px;
+}
+
+.lesson-info {
+  font-size: 20px;
+}

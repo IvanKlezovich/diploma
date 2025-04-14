@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Панель учащегося</title>
-  <link rel="stylesheet" th:href="@{/css/baseStyle.css}">
+  <link rel="stylesheet" th:href="@{/css/student/index.css}">
 </head>
 <body>
 <header>
@@ -12,69 +12,116 @@
   <p>Класс: 7А | Ученик: Иванов Иван</p>
 </header>
 
-<nav>
-  <ul>
-    <li><a th:href="@{/student/schedules}">Расписание</a></li>
-    <li><a th:href="@{/student/mark}">Оценки</a></li>
-    <li><a th:href="@{/student/homework}">Домашнее задание</a></li>
-  </ul>
-</nav>
+<div class="card-container">
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Расписание</h3>
+      <a class="card-link" th:href="@{/student/schedules}">Посмотреть расписание</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <h3 class="card-title">Отметки</h3>
+      <a class="card-link" th:href="@{/student/mark}">Посмотреть отметки</a>
+    </div>
+  </div>
+
+</div>
 
 <main>
-  <section id="raspisanie">
-    <h2>Расписание уроков</h2>
-    <table class="schedule">
-      <tr>
-        <th>Время</th>
-        <th>Понедельник</th>
-        <th>Вторник</th>
-        <th>Среда</th>
-        <th>Четверг</th>
-        <th>Пятница</th>
-      </tr>
-      <tr>
-        <td>9:00-9:45</td>
-        <td>Математика</td>
-        <td>Русский язык</td>
-        <td>Физика</td>
-        <td>Химия</td>
-        <td>Биология</td>
-      </tr>
-      <!-- Добавьте остальные пары -->
-    </table>
-  </section>
 
-  <section id="otsenki">
-    <h2>Оценки</h2>
-    <table class="grades-table">
-      <tr>
-        <th>Предмет</th>
-        <th>Оценка</th>
-        <th>Дата</th>
-      </tr>
-      <tr>
-        <td>Математика</td>
-        <td>5</td>
-        <td>01.09.2024</td>
-      </tr>
-      <!-- Добавьте другие оценки -->
-    </table>
-  </section>
-
-  <section id="domashnee">
-    <h2>Домашнее задание</h2>
-    <p>На сегодня:</p>
-    <ul>
-      <li>Математика: решить задачи 23-25, с. 123</li>
-      <li>Русский язык: написать сочинение по теме</li>
-    </ul>
-  </section>
-
-
+  <div class="columns-container">
+    <div class="column today-section">
+      <h2> На сегодня </h2>
+      <h2>Расписание уроков</h2>
+      <table class="schedule">
+        <tr>
+          <th>Время</th>
+          <th>Предмет</th>
+        </tr>
+        <tr>
+          <td>9:00-9:45</td>
+          <td>Математика</td>
+        </tr>
+        <tr>
+          <td>9:55-10:40</td>
+          <td>Русский язык</td>
+        </tr>
+        <tr>
+          <td>10:50-11:35</td>
+          <td>Русская литература</td>
+        </tr>
+        <tr>
+          <td>11:45-12:30</td>
+          <td>Биология</td>
+        </tr>
+        <tr>
+          <td>13:00-13:45</td>
+          <td>География</td>
+        </tr>
+        <tr>
+          <td>13:55-14:40</td>
+          <td>Английский язык</td>
+        </tr>
+      </table>
+      <h2>Оценки</h2>
+      <table class="grades-table">
+        <tr>
+          <th>Предмет</th>
+          <th>Оценка</th>
+        </tr>
+        <tr>
+          <td>Математика</td>
+          <td>5</td>
+        </tr>
+      </table>
+      <h2>Домашнее задание</h2>
+      <ul>
+        <li>Математика: решить задачи 23-25, с. 123</li>
+        <li>Русский язык: написать сочинение по теме</li>
+      </ul>
+    </div>
+    <div class="column tomorrow-section">
+      <h2> На завтра </h2>
+      <h2>Расписание уроков</h2>
+      <table class="schedule">
+        <tr>
+          <th>Время</th>
+          <th>Предмет</th>
+        </tr>
+        <tr>
+          <td>9:00-9:45</td>
+          <td>Математика</td>
+        </tr>
+        <tr>
+          <td>9:55-10:40</td>
+          <td>Русский язык</td>
+        </tr>
+        <tr>
+          <td>10:50-11:35</td>
+          <td>Русская литература</td>
+        </tr>
+        <tr>
+          <td>11:45-12:30</td>
+          <td>Биология</td>
+        </tr>
+        <tr>
+          <td>13:00-13:45</td>
+          <td>География</td>
+        </tr>
+        <tr>
+          <td>13:55-14:40</td>
+          <td>Английский язык</td>
+        </tr>
+      </table>
+      <h2>Домашнее задание</h2>
+      <ul>
+        <li>Математика: решить задачи 23-25, с. 123</li>
+        <li>Русский язык: написать сочинение по теме</li>
+      </ul>
+    </div>
+  </div>
 </main>
-
-<footer>
-  <p>&copy; 2025 Школьный дневник | Разработано для учеников</p>
-</footer>
 </body>
 </html>
