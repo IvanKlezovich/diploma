@@ -18,8 +18,8 @@ public class Admin extends User implements Serializable {
   private Role role = Role.ADMIN;
 
   public Admin(Name name, String email,
-      String phone, String login, String password,
+      String phone, String username, String password,
       LocalDate timeLimit) {
-    super(name, email, phone, login, password, timeLimit);
+    super(name, email, phone, username, password, timeLimit);
   }
 }

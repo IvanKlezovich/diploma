@@ -1,15 +1,16 @@
 package com.example.diploma.config.security;
 
-import com.example.diploma.repository.UserRepository;
-import com.example.diploma.security.CustomUserDetailsService;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -21,29 +22,29 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
-  public UserDetailsService userDetailsService(UserRepository userRepository) {
-    return new CustomUserDetailsService(userRepository);
-  }
-
 //  @Bean
-//  public UserDetailsService userDetailsService() {
-//    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//    manager.createUser(
-//        User.withUsername("user")
-//            .password(passwordEncoder().encode("password")).roles("STUDENT")
-//            .build());
-//    manager.createUser(
-//        User.withUsername("admin").password(passwordEncoder().encode("password")).roles("ADMIN")
-//            .build());
-//    manager.createUser(
-//        User.withUsername("teacher").password(passwordEncoder().encode("password")).roles("TEACHER")
-//            .build());
-//    manager.createUser(
-//        User.withUsername("parent").password(passwordEncoder().encode("password")).roles("PARENT")
-//            .build());
-//    return manager;
+//  public UserDetailsService userDetailsService(UserRepository userRepository) {
+//    return new CustomUserDetailsService(userRepository);
 //  }
+
+  @Bean
+  public UserDetailsService userDetailsService() {
+    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+    manager.createUser(
+        User.withUsername("user")
+            .password(passwordEncoder().encode("password")).roles("STUDENT")
+            .build());
+    manager.createUser(
+        User.withUsername("admin").password(passwordEncoder().encode("password")).roles("ADMIN")
+            .build());
+    manager.createUser(
+        User.withUsername("teacher").password(passwordEncoder().encode("password")).roles("TEACHER")
+            .build());
+    manager.createUser(
+        User.withUsername("parent").password(passwordEncoder().encode("password")).roles("PARENT")
+            .build());
+    return manager;
+  }
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

@@ -42,6 +42,7 @@ import com.example.diploma.service.UserService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,13 +63,14 @@ public class AdminFacade {
   private final TeacherMapper teacherMapper;
   private final ClassMapper formMapper;
   private final StudentMapper studentMapper;
+  private final PasswordEncoder passwordEncoder;
 
   public void addPeople(CreateUserDto createUserDto) {
     String password = "password";
     switch (createUserDto.role()) {
       case "admin" -> adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
           createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), password, createUserDto.timeLimit()));
+          createUserDto.phone(), createUserDto.login(), passwordEncoder.encode(password), createUserDto.timeLimit()));
       case "parent" -> parentService.addParent(new Parent(new Name(createUserDto.firstname(),
           createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
           createUserDto.phone(), createUserDto.login(), password,
