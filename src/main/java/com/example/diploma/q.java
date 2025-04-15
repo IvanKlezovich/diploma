@@ -8,7 +8,7 @@ public class q {
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            System.out.println(randomPass(symbols, 16));
+            System.out.println(randomPass(symbols, 256));
         }
     }
 
