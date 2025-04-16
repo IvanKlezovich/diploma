@@ -11,7 +11,32 @@
   <h1>Школьный дневник</h1>
   <p>Класс: 7А | Ученик: Иванов Иван</p>
 </header>
+<div class="modal fade" id="gradesModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Отметки</h5>
+        <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
 
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="gradesToUpModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Количество отметок, до повышения</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
 <div class="card-container">
   <div class="card">
     <div class="card-content">
@@ -36,18 +61,20 @@
       <th>Предмет</th>
       <th>Оценка</th>
       <th>Дата</th>
+      <th>Действие</th>
     </tr>
     <tr>
       <td>Математика</td>
       <td>5</td>
       <td>01.09.2024</td>
+      <td>
+        <button class="btn btn-primary" data-bs-target="#gradesModal" data-bs-toggle="modal">
+          Добавить человека
+        </button>
+      </td>
     </tr>
     <!-- Добавьте другие оценки -->
   </table>
 </main>
-
-<footer>
-  <p>&copy; 2025 Школьный дневник | Разработано для учеников</p>
-</footer>
 </body>
 </html>

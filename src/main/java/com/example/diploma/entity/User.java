@@ -55,6 +55,7 @@ public class User implements Serializable {
 
   private Boolean isBlocked;
 
+
   public User(Name name, String email,
       String phone, String username, String password,
       LocalDate timeLimit) {

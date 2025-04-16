@@ -1,3 +1,8 @@
+app:
+  password:
+    length: 16
+    symbols: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@$%^&*
+
 server:
   port: 8080
   servlet:
@@ -21,8 +26,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD} 
+    username: klezovicivan@gmail.com
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -43,8 +48,8 @@ spring:
   #==============================================================================
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/school
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASS}
+    username: user
+    password: pass
   jpa:
     hibernate.ddl-auto: update
     open-in-view: false

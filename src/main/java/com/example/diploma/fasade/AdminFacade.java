@@ -31,6 +31,8 @@ import com.example.diploma.mapper.ClassMapper;
 import com.example.diploma.mapper.LessonMapper;
 import com.example.diploma.mapper.StudentMapper;
 import com.example.diploma.mapper.TeacherMapper;
+import com.example.diploma.security.MailMessageSender;
+import com.example.diploma.security.impl.PasswordGeneratorImpl;
 import com.example.diploma.service.AdminService;
 import com.example.diploma.service.FormService;
 import com.example.diploma.service.LessonService;
@@ -42,8 +44,10 @@ import com.example.diploma.service.UserService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
@@ -64,26 +68,25 @@ public class AdminFacade {
   private final ClassMapper formMapper;
   private final StudentMapper studentMapper;
   private final PasswordEncoder passwordEncoder;
+  private final PasswordGeneratorImpl passwordGenerator;
+  private final MailMessageSender emailService;
+//  private final DataServiceImpl dataService;
 
+  @Value("${spring.mail.username}")
+  private String from;
+
+  @Transactional
   public void addPeople(CreateUserDto createUserDto) {
     String password = "password";
+    char[] passwordArray = passwordGenerator.getPassword();
+    System.out.println(passwordArray);
+//    emailService.send(createUserDto.email(), from, "Данные для доступа к дневнику",
+//        "login: " + createUserDto.login() + "\n" + "password: " + passwordArray);
     switch (createUserDto.role()) {
-      case "admin" -> adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), passwordEncoder.encode(password), createUserDto.timeLimit()));
-      case "parent" -> parentService.addParent(new Parent(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), password,
-          createUserDto.job(), createUserDto.description(), List.of(new Student()),
-          createUserDto.timeLimit()));
-      case "teacher" -> teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), password,
-          createUserDto.timeLimit()));
-      case "student" -> studentService.addStudent(new Student(new Name(createUserDto.firstname(),
-          createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
-          createUserDto.phone(), createUserDto.login(), password,
-          createUserDto.timeLimit()));
+      case "admin" -> createAdmin(createUserDto, password);
+      case "parent" -> createParent(createUserDto, password);
+      case "teacher" -> createTeacher(createUserDto, password);
+      case "student" -> createStudent(createUserDto, password);
       default -> System.out.println("Такой роли нет");
     }
   }
@@ -228,5 +231,35 @@ public class AdminFacade {
   }
 
   public void saveSchedulerByFile(MultipartFile file, String className, String fileType) {
+//    dataService.uploadData(file);
+  }
+
+  private void createStudent(CreateUserDto createUserDto, String password) {
+    studentService.addStudent(new Student(new Name(createUserDto.firstname(),
+        createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+        createUserDto.phone(), createUserDto.login(), passwordEncoder.encode(password),
+        createUserDto.timeLimit()));
+  }
+
+  private void createTeacher(CreateUserDto createUserDto, String password) {
+    teacherService.addTeacher(new Teacher(new Name(createUserDto.firstname(),
+        createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+        createUserDto.phone(), createUserDto.login(), passwordEncoder.encode(password),
+        createUserDto.timeLimit()));
+  }
+
+  private void createParent(CreateUserDto createUserDto, String password) {
+    parentService.addParent(new Parent(new Name(createUserDto.firstname(),
+        createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+        createUserDto.phone(), createUserDto.login(), passwordEncoder.encode(password),
+        createUserDto.job(), createUserDto.description(), List.of(new Student()),
+        createUserDto.timeLimit()));
+  }
+
+  private void createAdmin(CreateUserDto createUserDto, String password) {
+    adminService.addAdmin(new Admin(new Name(createUserDto.firstname(),
+        createUserDto.surname(), createUserDto.lastname()), createUserDto.email(),
+        createUserDto.phone(), createUserDto.login(), passwordEncoder.encode(password),
+        createUserDto.timeLimit()));
   }
 }

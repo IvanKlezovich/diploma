@@ -1,16 +1,17 @@
 package com.example.diploma.config.security;
 
-
+import com.example.diploma.security.CustomUserDetailsService;
+import java.security.SecureRandom;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -18,32 +19,26 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
   @Bean
+  public SecureRandom secureRandom() {
+    return new SecureRandom();
+  }
+
+  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
-//  @Bean
-//  public UserDetailsService userDetailsService(UserRepository userRepository) {
-//    return new CustomUserDetailsService(userRepository);
-//  }
-
   @Bean
   public UserDetailsService userDetailsService() {
-    InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-    manager.createUser(
-        User.withUsername("user")
-            .password(passwordEncoder().encode("password")).roles("STUDENT")
-            .build());
-    manager.createUser(
-        User.withUsername("admin").password(passwordEncoder().encode("password")).roles("ADMIN")
-            .build());
-    manager.createUser(
-        User.withUsername("teacher").password(passwordEncoder().encode("password")).roles("TEACHER")
-            .build());
-    manager.createUser(
-        User.withUsername("parent").password(passwordEncoder().encode("password")).roles("PARENT")
-            .build());
-    return manager;
+    return new CustomUserDetailsService();
+  }
+
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+    daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+    daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+    return daoAuthenticationProvider;
   }
 
   @Bean
